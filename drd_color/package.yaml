@@ -1,0 +1,39 @@
+config_version : 0
+
+name: drd_color
+
+version: 1.10.0
+
+uuid: 232ba314-c463-11df-b2cc-00219b3794e8
+
+authors:
+- malcolm.humphreys
+- oliver.farkas
+
+description: >
+ This project contains all the viewer code for applying drd
+ color transforms.
+
+variants:
+- [ lin64 ]
+
+requires:
+- OpenColorIO-0.8.1
+
+commands:
+
+# OpenColorIO profile
+- export OCIO=!ROOT!/share/ocio/hf2/config.ocio
+
+# RV Mu modules
+- export RV_SUPPORT_PATH=!ROOT!/share/rv:$RV_SUPPORT_PATH
+
+# Nuke gizmos
+- export NUKE_PATH=!ROOT!/share/nuke:$NUKE_PATH
+
+# Viewer Luts
+- export DRD_QUICKTIMELUT=!ROOT!/share/ocio/hf2/files/Kodak2383CoolGrade_ocio.csp
+- export DRD_MARILUT_DREAMCOLOR=!ROOT!/share/ocio/hf2/files/mari_Dreamcolor.lut
+- export DRD_MARILUT_SRGB=!ROOT!/share/ocio/hf2/files/mari_sRGB.lut
+- source  !ROOT!/share/ocio/hf2/dreamcolor_detect.sh !ROOT!
+

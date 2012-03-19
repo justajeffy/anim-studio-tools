@@ -1,0 +1,9 @@
+<software name="drd_color">
+    <add key="DRD_COLOR_ROOT">$DRD_SOFTWARE_INT/apps/drd_color/v00_02_00</add>
+    <add key="RV_SUPPORT_PATH">$DRD_COLOR_ROOT/share/rv</add>
+    <add key="NUKE_PATH">$DRD_COLOR_ROOT/share/nuke</add>
+    <!-- luts TODO: move these somewhere else later -->
+    <add key="DRD_DISPLAYLUT_RV">$DRD_COLOR_ROOT/share/viewerluts/sRGB/Kodak2383.csp</add>
+    <add key="DRD_DISPLAYLUT_NUKE">$DRD_COLOR_ROOT/share/viewerluts/sRGB/jpLog_Kodak2383.csp</add>
+    <add key="HOUDINI_IMAGE_DISPLAY_LUT">$DRD_COLOR_ROOT/share/viewerluts/sRGB/Kodak2383.lut</add>
+</software>

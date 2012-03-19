@@ -1,0 +1,15 @@
+#Display "idisplay" "framebuffer" "rgba"
+Format 320 240 1
+Projection "perspective" "fov" [15]
+
+Translate 0 0 5
+Rotate 80 1 2 3
+PixelSamples 8 8
+
+WorldBegin
+  LightSource "ambientlight" 1 "intensity" [0.2]
+  LightSource "distantlight" 2 "intensity" [1.2]"from" [2 0 -6]"to" [0 0 0]
+
+  Surface "my_ptc"
+  Procedural "DynamicLoad" ["delightPyProcedural" "PtcProc('moss.ptc')"] [-1000 1000 -1000 1000 -1000 1000]
+WorldEnd

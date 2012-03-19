@@ -1,0 +1,22 @@
+config_version : 0
+
+name: bimath
+
+version: 0.1.0
+
+uuid: f6cf5416-fc1e-11df-9482-002564afe6ee
+
+authors:
+- allan.johns
+
+description: >
+ Supporting boost code for Imath data types (eg serialization, type_traits).
+
+variants:
+- [ lin64 ]
+
+commands:
+- export CMAKE_MODULE_PATH=$CMAKE_MODULE_PATH:!ROOT!/cmake
+
+
+# note: header-only lib - missing dependencies are intentional

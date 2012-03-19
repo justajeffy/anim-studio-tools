@@ -1,0 +1,20 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+
+set(boost_COMPONENTS python)
+
+drd_find_packages(PREFIX pkgs AUTO)
+
+INCLUDE_DIRECTORIES (../lib)
+
+LINK_DIRECTORIES ( lib )
+
+FILE(GLOB_RECURSE cpp_files "*.cpp")
+ADD_LIBRARY ( pyNapalmGL SHARED ${cpp_files} )
+
+TARGET_LINK_LIBRARIES( pyNapalmGL napalmGL ${pkgs_LIBRARIES} )
+
+SET_TARGET_PROPERTIES ( pyNapalmGL PROPERTIES PREFIX "")
+SET_TARGET_PROPERTIES ( pyNapalmGL PROPERTIES OUTPUT_NAME "_napalmGL" )
+
+INSTALL ( TARGETS pyNapalmGL DESTINATION py/napalmGL )
+

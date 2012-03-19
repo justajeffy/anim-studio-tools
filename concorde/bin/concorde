@@ -1,0 +1,2 @@
+#!/bin/bash
+drd-python ${DRD_CONCORDE_ROOT}/concorde.py $@

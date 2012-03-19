@@ -1,0 +1,1 @@
+echo 'drd-python test_grad.py' | drd-env -s napalmImageIO pimath rv pdiff houdini

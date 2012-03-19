@@ -1,0 +1,10 @@
+CMAKE_MINIMUM_REQUIRED ( VERSION 2.8 )
+
+drd_find_packages(PREFIX pkgs AUTO)
+
+INCLUDE_DIRECTORIES ( ../lib )
+LINK_DIRECTORIES( lib )
+
+ADD_EXECUTABLE (napalmGL_test main.cpp)
+TARGET_LINK_LIBRARIES ( napalmGL_test napalmGL ${pkgs_LIBRARIES} )
+INSTALL ( TARGETS napalmGL_test DESTINATION test )

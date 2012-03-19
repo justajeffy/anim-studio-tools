@@ -1,0 +1,32 @@
+config_version : 0
+
+name: clip_sops
+
+version: 0.8.0
+
+uuid: dadc665e-b0d2-11e0-981c-002564afe6ee
+
+authors:
+- allan.johns
+
+description: >
+ Various SOPs for clipping and fracturing operations.
+
+variants:
+- [ lin64, houdini-11.0.701 ]
+
+requires:
+- boost-1.37.0
+- boost_process
+- pystring
+- ilmbase-1.0.2
+- hdk_utils-0.4
+- tbb-2.2
+- dgal-0.5
+
+
+commands:
+- export HOUDINI_PATH=$HOUDINI_PATH:!ROOT!/houdini
+- export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:!ROOT!/lib
+# bizzare issue with houdini where presence of libaoss increases performance drmatically
+- export LD_PRELOAD=$LD_PRELOAD:/usr/lib64/libaoss.so.0

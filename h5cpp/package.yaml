@@ -1,0 +1,26 @@
+config_version : 0
+
+name: h5cpp
+
+version: 1.4.16
+
+uuid: 7338a838-f1fa-11df-9cfe-002564afe6ee
+
+authors:
+- allan.johns
+
+description: >
+ A C++ layer for HDF5 which closely mirrors the HDF5 API, but is much easier and safer to
+ use, and results in much less verbose client code.
+
+variants:
+- [ lin64, hdf5-1.8.5 ]
+- [ lin64, hdf5-1.8.5.1 ]
+
+requires:
+- boost-1.37
+
+commands:
+- export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:!ROOT!/lib
+- export CMAKE_MODULE_PATH=$CMAKE_MODULE_PATH:!ROOT!/cmake
+- export PATH=$PATH:!ROOT!/test

@@ -1,0 +1,1 @@
+echo 'napalmCuda_test' | drd-env -s napalmCuda

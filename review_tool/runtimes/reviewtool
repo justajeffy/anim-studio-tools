@@ -1,0 +1,2 @@
+#!/bin/bash
+python2.5 $REVIEW_TOOL_ROOT/runtimes/run_review_tool.py "$@"

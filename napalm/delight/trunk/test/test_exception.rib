@@ -1,0 +1,63 @@
+Format 800 600 1
+Projection "perspective" "fov" [15]
+
+Option "searchpath" "procedural" ["@:$DRD_NAPALMDELIGHT_ROOT/test"]
+
+#----------------------------------------------------------------------
+# need to set up the variable as an AOV, but we'll not write out a file
+#----------------------------------------------------------------------
+DisplayChannel "float my_radius"
+Display "+dummy" "null" "my_radius"
+
+Translate 0 0 15
+Rotate 220 1 2 3
+
+WorldBegin
+
+  ObjectBegin "my_patch"
+  Patch "bilinear" "P" [ -2 2 0 2 2 0 -2 -2 0 2 -2 0 ] "st" [0 0 0 1 1 0 1 1]
+  ObjectEnd
+
+  Translate 1 0 0
+
+  Color [1.0 1.0 1.0]
+  #Opacity[1.0 1.0 1.0]
+  Attribute "user" "float prim_type" [1]
+
+  # NOTE: this object name should appear in the exception message
+  Attribute "identifier" "string name" ["MyObjectName"]
+
+  # NOTE: this has badly formed params
+  Procedural "DynamicLoad" ["GxSxProc.so" "{'geoName':'my_patch',
+                                            'count':100,
+                                            'renderPrimitiveBound':0,
+                                            'globalBoundPad':'bad_type',
+                                            'displacement':{'name':'my_displace',
+                                                            'params':{'Km':[0.5],
+                                                                      'amplitude':[1.0],
+                                                                      'texturename':['/drd/depts/rnd/test_data/drd.tdl']
+                                                                      }
+                                                            },
+                                            'surface':{'name':'my_surface',
+                                                       'params':{'col':[0.8,1.0,0.8],
+                                                                 'texturename':['/drd/depts/rnd/test_data/drd.tdl']
+                                                                 }
+                                                        }
+                                            }"] [-100 100 -100 100 -100 100]
+
+  #--------------------------------------------------------------
+  # Now show what the actual geo looks like when shaded/displaced
+  #--------------------------------------------------------------
+
+  Displacement "my_displace" "float Km" [0.5] "float amplitude" [1.0] "string texturename" ["/drd/depts/rnd/test_data/drd.tdl"]
+  Surface "my_surface" "string texturename" ["/drd/depts/rnd/test_data/drd.tdl"]
+  #Color[1 1 1]
+  #Opacity[0.3 0.3 0.3]
+
+AttributeBegin
+  Attribute "user" "float prim_type" [0]
+  Opacity 0.1 0.1 0.1
+  ObjectInstance "my_patch"
+  AttributeEnd
+
+WorldEnd

@@ -1,0 +1,30 @@
+config_version : 0
+
+name: napalmMPI
+
+version: 0.0.0
+
+uuid: 2c49e458-96cf-11e0-aade-002564afbc30
+
+authors:
+- chris.cooper
+
+description: >
+ MPI for napalm
+
+variants:
+- [ lin64 ]
+
+requires:
+- napalm-1.5
+- ilmbase # version determined by napalm
+- python # version determined by napalm
+#- boost # version determined by napalm
+- boost_mpi
+- mpich2-1.2
+
+commands:
+- export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:!ROOT!/lib
+- export PYTHONPATH=$PYTHONPATH:!ROOT!/py
+- export CMAKE_MODULE_PATH=$CMAKE_MODULE_PATH:!ROOT!/cmake
+- export PATH=$PATH:!ROOT!/test

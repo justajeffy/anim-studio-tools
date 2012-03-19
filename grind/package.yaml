@@ -1,0 +1,34 @@
+config_version : 0
+
+name: grind
+
+version: 2.54.0
+
+uuid: daf5ebda-a442-11df-b310-002564afe6ee
+
+authors:
+- chris.cooper
+- allan.johns
+
+description: >
+ cuda framework library
+
+variants:
+- [ lin64, gpuStub ]
+- [ lin64, cpuStub ]
+
+requires:
+- boost-1.37.0
+- thrust-1.2.0
+- cuda-2.3
+- nvidia_gpu_sdk-2.3
+- bee-1.75
+- python-2.5
+- doxygen-1.5
+- oriented_bounding_box-0.2
+#- napalmDelight-0.23.0 # for evaluation of SxShader information
+
+commands:
+- export CMAKE_MODULE_PATH=$CMAKE_MODULE_PATH:!ROOT!/cmake
+- export PYTHONPATH=$PYTHONPATH:!ROOT!/py
+- export DRD_PYTHON_PATH_GRIND=!ROOT!/py

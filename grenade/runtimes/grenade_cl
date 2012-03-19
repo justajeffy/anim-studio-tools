@@ -1,0 +1,7 @@
+#!/bin/bash
+#
+# Copyright 2010 Dr D Studios Pty Limited (ACN 127 184 954) (Dr. D Studios), its
+# affiliates and/or its licensors.
+#
+
+/usr/bin/python2.5 $GRENADE_DIR/runtimes/grenade_cl.py "$@"

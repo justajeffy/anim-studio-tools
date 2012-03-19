@@ -1,0 +1,41 @@
+config_version : 0
+
+name: bee
+
+version: 1.75.0
+
+uuid: 2167a9d8-9f7e-11df-a2e4-002564afe6ee
+
+authors:
+- allan.johns
+- stephane.bertout
+- david.morris
+- chris.cooper
+
+description: >
+ opengl rendering library with various file format support
+
+variants:
+# todo remove boost from variant once launcher not in use
+- [ lin64, boost-1.37.0 ]
+
+requires:
+- python-2.5
+- glew-1.5.2
+- freeglut-2.6.0
+- freeimage-3.13.0
+- openexr-1.7.0
+- delight-9.0
+- delightUtils-0.4
+- drdDebug-0.4
+- vacuum-2.55
+- doxygen-1.5
+- OpenColorIO-0.7.6+<0.8
+#- qt-4.5.3 # for samples
+
+commands:
+- export PYTHONPATH=$PYTHONPATH:!ROOT!/py
+- export DRD_PYTHON_PATH_BEE=!ROOT!/py
+- export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:!ROOT!/lib
+- export CMAKE_MODULE_PATH=$CMAKE_MODULE_PATH:!ROOT!/cmake
+#- export PATH=$PATH:!ROOT!/bin

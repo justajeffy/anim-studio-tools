@@ -1,0 +1,32 @@
+config_version:  0
+
+name:  review_tool
+
+version:  2.0.20
+
+uuid:  3103e572-fdc1-11df-a7ab-00219b523c83
+
+authors:
+- eric.hulser
+
+description:  >
+ Rebuilding of the Review Tool system for reviewing shots and playlists from shotgun
+
+variants:
+- [ lin64, python-2.5 ]
+
+requires:
+- rv_tools
+- drGadgets
+- shotgun-3+<3.1
+- contactSheet
+- sinfo
+- kopano
+- breakdown_diagnosis
+
+commands:
+- export PYTHONPATH=$PYTHONPATH:!ROOT!/sources
+- export DRD_PYTHON_PATH_REVIEWTOOL=!ROOT!/sources
+- export REVIEW_TOOL_VER=$DRD_REVIEW_TOOL_VERSION
+- export PATH=$PATH:!ROOT!/runtimes
+- export REVIEW_TOOL_ROOT=!ROOT!

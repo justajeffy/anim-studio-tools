@@ -1,0 +1,10 @@
+#Display "idisplay" "framebuffer" "rgba"
+Format 640 480 1
+Projection "perspective" "fov" [30]
+
+Translate 0 0 7
+Rotate 80 1 2 3
+
+WorldBegin
+  Procedural "DynamicLoad" ["delightPyProcedural" "SphereProc([0,1,0], 1.0)"] [-1000 1000 -1000 1000 -1000 1000]
+WorldEnd

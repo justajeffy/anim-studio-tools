@@ -1,0 +1,32 @@
+config_version : 0
+
+name: napalmCuda
+
+version: 0.0.0
+
+uuid: 2642bb10-1ecb-11e0-8161-002564afbc30
+
+authors:
+- chris.cooper
+
+description: >
+ Cuda related buffer management for napalm
+
+variants:
+- [ lin64 ]
+
+requires:
+- napalm-1.0
+- nvidia_gpu_sdk
+- cuda
+- thrust
+- boost # version determined by napalm
+- boost_future # until we're using boost 1.41+
+- threadpool
+
+commands:
+- export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:!ROOT!/lib
+- export PYTHONPATH=$PYTHONPATH:!ROOT!/py
+- export HOUDINI_PATH=$HOUDINI_PATH:!ROOT!/houdini
+- export CMAKE_MODULE_PATH=$CMAKE_MODULE_PATH:!ROOT!/cmake
+- export PATH=$PATH:!ROOT!/test

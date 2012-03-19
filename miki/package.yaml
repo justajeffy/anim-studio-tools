@@ -1,0 +1,35 @@
+config_version : 0
+
+name: miki
+
+version: 1.0.7
+
+uuid: ac66340a-e268-11df-adb7-00219b56ccb4
+
+authors:
+- mark.streatfield
+
+description: >
+ Sphix based documentation tool.
+
+variants:
+- [ lin64, python-2.5 ]
+
+requires:
+- sphinx-1
+- argparse-1
+- docutils-0
+- pygments-1
+- jinja-2
+- roman-1
+- rst2pdf-1
+- reportlab-2
+- PIL-1
+- breathe-0
+- rodin-0
+- doxygen-1
+
+commands:
+- export PYTHONPATH=$PYTHONPATH:!ROOT!/sources
+- export DRD_PYTHON_PATH_MIKI=!ROOT!/sources
+- export PATH=$PATH:!ROOT!/runtimes

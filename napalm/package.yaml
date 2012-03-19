@@ -1,0 +1,35 @@
+config_version : 0
+
+name: napalm
+
+version: 1.15.1
+
+uuid: 0b374d96-ae86-11df-b121-002564afe6ee
+
+authors:
+- allan.johns
+- hugh.rayner
+
+description: >
+ A library for describing, manipulating and serialising core vfx types, such
+ as buffers and containers.
+
+variants:
+- [ lin64 ]
+
+requires:
+- boost-1.37.0
+- ilmbase-1.0.2
+- bimath-0.0.18+<0.1
+- pystring-2010.1.28
+- python-2.5
+- drdDebug-0.4
+
+commands:
+- export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:!ROOT!/lib
+- export PYTHONPATH=$PYTHONPATH:!ROOT!/py
+- export DRD_PYTHON_PATH_NAPALM=!ROOT!/py
+- export CMAKE_MODULE_PATH=$CMAKE_MODULE_PATH:!ROOT!/cmake
+
+# for testing only, remove later when napalm has more use
+- export PATH=$PATH:!ROOT!/test

@@ -1,0 +1,46 @@
+config_version : 0
+
+name: probe
+
+version: 0.15.3
+
+uuid: df0ef06c-e093-11df-9baf-00219b56ccb4
+
+authors:
+- mark.streatfield
+- luke.cole
+- dave.peacock
+
+description: >
+ Project for python related debugging, unit tests, code analysis and associated 
+ bits and pieces.
+
+variants:
+- [ lin64, python-2.5 ]
+
+requires:
+- pylint-0.23+
+- nose-0.11
+- itch-0.5+<1
+- gprof2dot-1
+- pyprof2calltree-1
+- guppy-0
+- pydot-1
+- sizeof-5
+- objgraph-1
+
+build_requires:
+- buildTools_miki-0
+
+help:
+- [ "general docs", "firefox http://drddocs!ROOT!/lin64/python-2.5/docs/_build/html/index.html" ]
+- [ "tank decorators", "firefox http://drddocs!ROOT!/lin64/python-2.5/docs/_build/html/user/decorators.html" ]
+
+
+commands:
+- alias nosetests='nosetests --config=!ROOT!/config/noserc'
+- export PYTHONPATH=$PYTHONPATH:!ROOT!/sources
+- export DRD_PYTHON_PATH_PROBE=!ROOT!/sources
+- export PATH=!ROOT!/runtimes:$PATH
+- function cProfile() { python2.5 -m cProfile -o /tmp/output.pstats "$@"; gprof2dot.py -f pstats /tmp/output.pstats | dot -Tpng -o /tmp/output.png; xnview /tmp/output.png; }
+- function kcgProfile() { python2.5 -m cProfile -o /tmp/output.pstats "$@"; pyprof2calltree -i /tmp/output.pstats -o /tmp/calltree.kgrind; kcachegrind /tmp/calltree.kgrind; }

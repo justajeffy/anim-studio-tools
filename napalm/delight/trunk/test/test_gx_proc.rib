@@ -1,0 +1,80 @@
+Quantize "rgba" 255 0 255 0
+#Display "points.tif" "tiff" "rgb"
+Display "idisplay" "idisplay" "rgba"
+Translate 0 0 10
+
+Option "searchpath" "procedural" ["@:$DRD_NAPALMDELIGHT_ROOT/test"]
+
+WorldBegin  # {
+
+  ObjectBegin "obj1"  # {
+    Sphere 1 -1 1 360
+      "varying color Cs" [ 1 1 1 1 1 1 0 0 0.2 0 0 0.2 ]
+  ObjectEnd  # }
+
+  ObjectBegin "obj2"  # {
+    SubdivisionMesh "catmull-clark" [ 8 8 4 4 4 4 4 4 4 4 ]
+    [ 0 1 5 4 7 6 3 2 10 11 14 15 12 13 9 8 0 8
+        9 1 5 1 9 13 4 5 13 12 7 4 12 15 6 7 15 14
+        3 6 14 11 2 3 11 10 0 2 10 8 ]
+      "P" [ -3 2 1 3 2 1 -3 0 1 -1 0 1
+        1 0 1 3 0 1 -1 -4 1 1 -4 1
+        -3 2 -1 3 2 -1 -3 0 -1 -1 0 -1
+        1 0 -1 3 0 -1 -1 -4 -1 1 -4 -1 ]
+      "facevarying color Cs" [ 1 0 0 0 1 0 0 0 1 1 0 0
+        0 1 0 0 0 1 1 0 0 0 1 0
+        0 1 0 0 0.7 0 0 0.6 0 0 0.5 0
+        0 0.4 0 0 0.3 0 0 0.2 0 0 0.1 0
+        0 0 0 0 0 1 0 1 0 0 1 1
+        1 0 0 1 0 1 1 1 0 1 1 1
+        0 0 0 0 0 1 0 1 0 0 1 1
+        1 0 0 1 0 1 1 1 0 1 1 1
+        0 0 0 0 0 1 0 1 0 0 1 1
+        1 0 0 1 0 1 1 1 0 1 1 1
+        0 0 0 0 0 1 0 1 0 0 1 1
+        1 0 0 1 0 1 1 1 0 1 1 1 ]
+  ObjectEnd  # }
+
+  ObjectBegin "obj3"  # {
+    Patch "bilinear"
+      "P" [ -2 2 0 2 2 0 -2 -2 0 1 -1 0 ]
+  ObjectEnd  # }
+
+  ObjectBegin "obj4" # {
+	  Torus 1 .3 0 360 360
+  ObjectEnd # }
+
+  AttributeBegin  # {
+    Translate 0.8 0 0
+    Scale 0.25 0.25 0.25
+    Rotate 15 0 1 0
+    Rotate 15 1 0 0
+    Procedural "DynamicLoad" [ "GxProc.so" "{'geoName':'obj1','count':12,'renderPrimitiveBound':1,'globalBoundPad':0.2}" ] [ -500 500 -500 500 -500 500 ]
+  AttributeEnd  # }
+
+
+  AttributeBegin  # {
+    Translate 0 0.3 0
+    Scale 0.2 0.2 0.2
+    Rotate -20 0 1 0
+    Rotate 25 1 0 0
+    Procedural "DynamicLoad" [ "GxProc.so" "{'geoName':'obj2','count':4,'renderPrimitiveBound':1,'renderFaceBound':0,'globalBoundPad':0.2}" ] [ -500 500 -500 500 -500 500 ]
+  AttributeEnd  # }
+
+
+  AttributeBegin  # {
+    Translate -0.7 -0.5 0
+    Scale 0.2 0.2 0.2
+    Rotate 25 1 0 0
+    Procedural "DynamicLoad" [ "GxProc.so" "{'geoName':'obj3','count':7,'renderPrimitiveBound':1,'renderFaceBound':0,'globalBoundPad':0.2}" ] [ -500 500 -500 500 -500 500 ]
+  AttributeEnd  # }
+
+  AttributeBegin  # {
+    Translate 0.7 -0.7 0
+    Scale 0.2 0.2 0.2
+    Rotate 30 1 1 0
+    Procedural "DynamicLoad" [ "GxProc.so" "{'geoName':'obj4','count':20,'renderPrimitiveBound':1,'globalBoundPad':0.2}" ] [ -500 500 -500 500 -500 500 ]
+  AttributeEnd  # }
+
+
+WorldEnd  # }

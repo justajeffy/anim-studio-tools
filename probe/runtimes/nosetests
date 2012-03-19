@@ -1,0 +1,46 @@
+#!/usr/bin/env python2.5
+#        Dr. D Studios - Software Disclaimer
+#
+# Copyright 2010 Dr D Studios Pty Limited (ACN 127 184 954) (Dr. D Studios), its
+# affiliates and/or its licensors.
+#
+
+"""
+Custom nose runner to ensure the Tank scratch plugin is installed - we aren't
+able to install Probe using setup tools so this is our only option (:extref:`<http://somethingaboutorange.com/mrl/projects/nose/0.11.2/plugins/writing.html#registering-a-plugin-without-setuptools>`).
+
+.. versionadded:: v00_03_00
+.. versionchanged:: 0.9.0
+    Only include the Tank Scratch plugin if Tank is in the current environment.
+.. versionchanged:: 0.11.0
+    Added the Fedex scratch plugin.
+.. versionchanged:: 0.12.0
+    Only load the plugins that are available.
+"""
+
+import os
+import nose
+import probe.plugins.nose_tank_scratch
+import probe.plugins.nose_fedex_scratch
+
+if __name__ == '__main__':
+    additional_plugins = []
+    
+    if os.environ.get("TANK_PROJECT", None): 
+        tank_plugin = probe.plugins.nose_tank_scratch.TankScratchNosePlugin()
+        
+        try:
+            tank_plugin.available()
+            additional_plugins.append(tank_plugin)
+        except Exception, e:
+            print "Unable to load Tank plugin : ", e
+        
+        fedex_plugin = probe.plugins.nose_fedex_scratch.FedexScratchNosePlugin()
+        
+        try:
+            fedex_plugin.available()
+            additional_plugins.append(fedex_plugin)
+        except Exception, e:
+            print "Unable to load Fedex plugin : ", e
+    
+    nose.main(addplugins=additional_plugins)

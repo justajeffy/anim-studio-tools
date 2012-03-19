@@ -1,0 +1,29 @@
+config_version : 0
+
+name: napalmGL
+
+version: 0.0.0
+
+uuid: 7fc0760a-3e1f-11e0-8815-002564afbc30
+
+authors:
+- chris.cooper
+
+description: >
+ GL rendering of napalm data
+
+variants:
+- [ lin64 ]
+
+requires:
+- napalm
+- python # version determined by napalm
+- boost # version determined by napalm
+- glew-1.5.2
+- freeglut-2.6.0
+
+commands:
+- export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:!ROOT!/lib
+- export PYTHONPATH=$PYTHONPATH:!ROOT!/py
+- export CMAKE_MODULE_PATH=$CMAKE_MODULE_PATH:!ROOT!/cmake
+- export PATH=$PATH:!ROOT!/test

@@ -1,0 +1,1 @@
+echo 'napalmGL_test' | drd-env -s napalmGL

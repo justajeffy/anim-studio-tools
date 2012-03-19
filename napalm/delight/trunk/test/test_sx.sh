@@ -1,0 +1,1 @@
+echo 'shaderdl my_tex_lookup.sl && sxTest' | drd-env -s napalmDelight delight

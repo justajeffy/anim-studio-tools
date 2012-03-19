@@ -1,0 +1,25 @@
+config_version : 0
+
+name: oriented_bounding_box
+
+version: 0.2.0
+
+uuid: d977de34-bc07-11e0-ba48-8b562ed56469
+
+authors:
+- hugh.rayner
+
+description: >
+ cpp procedural for fitting OBBs
+
+help:
+
+
+variants:
+- [ lin64 ]
+
+requires:
+- ilmbase
+
+commands:
+- export CMAKE_MODULE_PATH=$CMAKE_MODULE_PATH:!ROOT!/cmake

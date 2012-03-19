@@ -1,0 +1,14 @@
+CMAKE_MINIMUM_REQUIRED ( VERSION 2.8 )
+
+
+drd_find_packages(PREFIX pkgs AUTO)
+
+INCLUDE_DIRECTORIES ( ../lib )
+
+LINK_DIRECTORIES( lib )
+
+ADD_EXECUTABLE (h5cpp_test main.cpp)
+
+TARGET_LINK_LIBRARIES ( h5cpp_test h5cpp ${pkgs_LIBRARIES} )
+
+INSTALL ( TARGETS h5cpp_test DESTINATION test )

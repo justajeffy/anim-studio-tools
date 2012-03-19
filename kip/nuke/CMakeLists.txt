@@ -1,0 +1,20 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+
+include(DrdBuild)
+include(DrdInstallMikiDocs)
+
+install(DIRECTORY
+	code docs test
+	DESTINATION .
+	PATTERN .svn EXCLUDE
+)
+
+install(DIRECTORY
+	docs
+	DESTINATION .
+	PATTERN .svn EXCLUDE
+)
+
+SET (perms ${DRD_FILE_INSTALL_PERMISSIONS})
+LIST(APPEND perms OWNER_EXECUTE GROUP_EXECUTE WORLD_EXECUTE)
+drd_install_miki_docs(tank_hf2 SOURCEDIR code LOCAL ON)

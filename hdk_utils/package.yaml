@@ -1,0 +1,22 @@
+config_version : 0
+
+name: hdk_utils
+
+version: 0.4.0
+
+uuid: 6eb1a6f2-b0db-11e0-89f4-002564afe6ee
+
+authors:
+- allan.johns
+
+description: >
+ Utility code for the HDK API
+
+variants:
+- [ lin64, houdini-11.0.701 ]
+
+requires:
+- boost-1.37.0
+
+commands:
+- export CMAKE_MODULE_PATH=$CMAKE_MODULE_PATH:!ROOT!/cmake

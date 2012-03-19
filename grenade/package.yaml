@@ -1,0 +1,31 @@
+config_version : 0
+
+name: grenade
+
+version: 1.7.4
+
+uuid: 1fd5abc8-e0c0-11df-a0be-00219b56ccb4
+
+authors:
+- luke.cole
+- mark.streatfield
+- daniela.hasenbring
+
+description: >
+ An internal object oriented API and command-line interface to Shotgun.
+
+variants:
+- [ lin64, python-2.5 ]
+
+requires:
+- rodin-0
+- shotgun-3
+
+build_requires:
+- buildTools_miki-0
+
+commands:
+- export PYTHONPATH=$PYTHONPATH:!ROOT!/sources
+- export DRD_PYTHON_PATH_GRENADE=!ROOT!/sources
+- export PATH=$PATH:!ROOT!/runtimes
+- export GRENADE_DIR=!ROOT!

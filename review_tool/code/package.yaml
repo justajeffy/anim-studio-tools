@@ -1,0 +1,40 @@
+config_version:  0
+
+name:  review_tool
+
+version:  0.6.11
+
+uuid:  3103e572-fdc1-11df-a7ab-00219b523c83
+
+authors:
+- tommy.zhu
+- eric.hulser
+
+description:  >
+ Review Tool, review dailes and play in RV
+
+variants:
+- [ lin64, python-2.5 ]
+
+requires:
+- rv-3.10+<3.10.12
+- qt-4.5.3
+- pyQt
+- rv_tools
+- drGadgets
+- drTank
+- shotgun-3+<3.1
+- PIL
+- rodin
+- meme
+- contactSheet
+- sinfo
+- PyYAML
+- kopano
+- breakdown_diagnosis
+
+commands:
+- export PYTHONPATH=$PYTHONPATH:!ROOT!
+- export REVIEW_TOOL_ROOT=!ROOT!
+- export REVIEW_TOOL_VER=$DRD_REVIEW_TOOL_VERSION
+- export PATH=$PATH:!ROOT!/bin/

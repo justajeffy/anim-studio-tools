@@ -1,0 +1,27 @@
+config_version:  0
+
+name:  kipHoudini
+
+version:  0.1.0
+
+uuid:  52e785b6-b0ec-11e0-b0f1-37955c33054f
+
+authors:
+- kurian.os
+
+description:  >
+ Tool reading and writting anim curves to houdini
+
+variants:
+- [ lin64, python-2.5 ]
+
+requires:
+- houdini-11.0+<11.2
+- kip
+
+build_requires:
+- buildTools_miki-0
+
+commands:
+- export PATH=$PATH:!ROOT!/bin
+- export PYTHONPATH=$PYTHONPATH:!ROOT!/code

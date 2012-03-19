@@ -1,0 +1,40 @@
+#! /opt/Nuke/6.0v6/Nuke6.0 -nx
+version 6.0 v2
+Gizmo {
+ note_font "Bitstream Vera Sans"
+ mapsize {0.15 0.15}
+ addUserKnob {20 User}
+ addUserKnob {41 colorspace l "input colorspace" T to_display.colorspace}
+ addUserKnob {41 device l "display device" T to_display.device}
+ addUserKnob {41 transform l "display transform" T to_display.transform}
+ addUserKnob {41 exposure T to_display.exposure}
+ addUserKnob {41 display_gamma l "display gamma" T to_display.display_gamma}
+ addUserKnob {6 clamping +STARTLINE}
+ clamping true
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 389
+  ypos -170
+ }
+ Clamp {
+  name clamper
+  maximum 1000
+  xpos 389
+  ypos -140
+  disable {{1-parent.clamping 1}}
+ }
+ OCIODisplay {
+  name to_display
+  selected true
+  device 1
+  xpos 389
+  ypos -103
+ }
+ Output {
+  name Output1
+  xpos 389
+  ypos -30
+ }
+end_group

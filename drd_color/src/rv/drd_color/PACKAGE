@@ -1,0 +1,20 @@
+package: DRD Studios Color Package
+author: Malcolm Humphreys
+organization: DRD Studios
+contact: rnd@drdstudios.com
+version: 1.1
+requires: ''
+rv: 3.8
+url: 
+
+modes: 
+  - file: drd_color.mu
+    menu: ''
+    shortcut: ''
+    event: ''
+    load: immediate
+
+description: |
+    This RV package loads the DRD Studios color settings depending on the source footage being played.
+
+    

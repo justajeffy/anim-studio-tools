@@ -1,0 +1,28 @@
+config_version:  0
+
+name:  kip
+
+version:  0.1.2
+
+uuid:  60340454-ac57-11e0-8c8a-4773aa2373de
+
+authors:
+- kurian.os
+
+description:  >
+ Tool for keyframe interchanging project for houdini , maya and nuke
+
+variants:
+- [ lin64, python-2.5 ]
+
+requires:
+- rodin-0
+- napalm-1.6+<1.14
+- pimath-0+<1
+
+build_requires:
+- buildTools_miki-0
+
+commands:
+- export PATH=$PATH:!ROOT!/bin
+- export PYTHONPATH=$PYTHONPATH:!ROOT!/code

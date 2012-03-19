@@ -1,0 +1,144 @@
+---
+ocio_profile_version: 1
+
+resource_path: files
+strictparsing: true
+luma: [0.2126, 0.7152, 0.0722]
+
+roles:
+  scene_linear: scene_grey18
+  reference: scene_grey18
+  color_timing: scene_grey18_DI
+  compositing_log: scene_grey18_log
+  matte_paint: matte_paint_alloc
+  color_picking: scene_grey18
+  data: raw
+  default: scene_grey18
+
+displays:
+  - !<Display> {device: sRGB, name: Film, colorspace: sRGB}
+  - !<Display> {device: sRGB, name: Raw, colorspace: scene_grey18}
+  - !<Display> {device: sRGB, name: Log, colorspace: scene_grey18_log}
+  - !<Display> {device: Dreamcolor, name: Film, colorspace: Dreamcolor}
+  - !<Display> {device: Dreamcolor, name: Raw, colorspace: scene_grey18}
+  - !<Display> {device: Dreamcolor, name: Log, colorspace: scene_grey18_log}
+
+colorspaces:
+
+  - !<ColorSpace>
+    name: scene_grey18
+    family: lin
+    bitdepth: 32f
+    isdata: false
+    gpuallocation: lg2
+    gpumin: -15
+    gpumax: 6
+
+  - !<ColorSpace>
+    name: scene_grey18_log
+    family: log
+    bitdepth: 10ui
+    isdata: false
+    gpuallocation: uniform
+    gpumin: 0
+    gpumax: 1
+    from_reference: !<FileTransform> {src: jp_lin2log.lut, interpolation: linear}
+
+  - !<ColorSpace>
+    name: scene_grey18_DI
+    family: log
+    bitdepth: 10ui
+    isdata: false
+    gpuallocation: uniform
+    gpumin: 0
+    gpumax: 1
+    from_reference: !<GroupTransform>
+      children:
+         ## Slope in Printer Points (Cool Grade) ##
+         # exp = -1.1
+         # grade = [-1.17, 0.64, 0.54]
+         # slope = [math.pow(2.0, (exp + grade[0]) / (12.0 * 0.6)), \
+         #          math.pow(2.0, (exp + grade[1]) / (12.0 * 0.6)), \
+         #          math.pow(2.0, (exp + grade[2]) / (12.0 * 0.6))]
+         - !<CDLTransform> {slope: [0.80369623146242275, 0.9566818354009814, 0.94751600781483858], offset: [0, 0, 0], power: [1, 1, 1], saturation: 1}
+         # Lin to Log
+         - !<FileTransform> {src: jp_lin2log.lut, interpolation: linear}
+
+  - !<ColorSpace>
+    name: matte_paint_alloc
+    family: paint
+    bitdepth: 16ui
+    isdata: false
+    gpuallocation: uniform
+    gpumin: 0
+    gpumax: 1
+    to_reference: !<GroupTransform>
+      children:
+        - !<FileTransform> {src: mattepaint_tolog.csp, interpolation: linear}
+        - !<FileTransform> {src: jp_log2lin.lut, interpolation: linear}
+
+  - !<ColorSpace>
+    name: texcolor
+    family: tex
+    bitdepth: 16ui
+    isdata: false
+    gpuallocation: uniform
+    gpumin: 0
+    gpumax: 1
+    to_reference: !<ExponentTransform> {value: [2.2, 2.2, 2.2, 1]}
+
+  - !<ColorSpace>
+    name: raw
+    family: nc
+    bitdepth: 32f
+    isdata: true
+    gpuallocation: uniform
+    gpumin: 0
+    gpumax: 1
+
+  - !<ColorSpace>
+    name: sRGB
+    family: srgb
+    bitdepth: 8ui
+    isdata: false
+    gpuallocation: uniform
+    gpumin: 0
+    gpumax: 1
+    from_reference: !<GroupTransform>
+      children:
+         ## Slope in Printer Points (Cool Grade) ##
+         # exp = -1.1
+         # grade = [-1.17, 0.64, 0.54]
+         # slope = [math.pow(2.0, (exp + grade[0]) / (12.0 * 0.6)), \
+         #          math.pow(2.0, (exp + grade[1]) / (12.0 * 0.6)), \
+         #          math.pow(2.0, (exp + grade[2]) / (12.0 * 0.6))]
+         - !<CDLTransform> {slope: [0.80369623146242275, 0.9566818354009814, 0.94751600781483858], offset: [0, 0, 0], power: [1, 1, 1], saturation: 1}
+         # Lin to Log
+         - !<FileTransform> {src: jp_lin2log.lut, interpolation: linear}
+         # Log to Film_sRGB
+         - !<FileTransform> {src: Kodak2383_sRGB.cub, interpolation: linear}
+
+  - !<ColorSpace>
+    name: Dreamcolor
+    family: Dreamcolor
+    bitdepth: 32f
+    isdata: false
+    gpuallocation: uniform
+    gpumin: -15
+    gpumax: 6
+    from_reference: !<GroupTransform>
+      children:
+         ## Slope in Printer Points (Cool Grade) ##
+         # exp = -1.1
+         # grade = [-1.17, 0.64, 0.54]
+         # slope = [math.pow(2.0, (exp + grade[0]) / (12.0 * 0.6)), \
+         #          math.pow(2.0, (exp + grade[1]) / (12.0 * 0.6)), \
+         #          math.pow(2.0, (exp + grade[2]) / (12.0 * 0.6))]
+         - !<CDLTransform> {slope: [0.80369623146242275, 0.9566818354009814, 0.94751600781483858], offset: [0, 0, 0], power: [1, 1, 1], saturation: 1}
+         # Lin to Log
+         - !<FileTransform> {src: jp_lin2log.lut, interpolation: linear}
+         # Log to Film_sRGB
+         - !<FileTransform> {src: Kodak2383_Dreamcolor.cub, interpolation: linear}
+
+
+

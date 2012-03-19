@@ -1,0 +1,29 @@
+config_version : 0
+
+name: napalmImageIO
+
+version: 0.2.0
+
+uuid: 7d5622d4-4e87-11e0-a752-002564afbc30
+
+authors:
+- chris.cooper
+
+description: >
+ Image IO for Napalm
+
+variants:
+- [ lin64, napalm-1.5 ]
+- [ lin64, napalm-1.13 ]
+
+requires:
+- ilmbase # version determined by napalm
+- python # version determined by napalm
+- boost # version determined by napalm
+- OpenImageIO-0.9.0
+
+commands:
+- export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:!ROOT!/lib
+- export PYTHONPATH=$PYTHONPATH:!ROOT!/py
+- export CMAKE_MODULE_PATH=$CMAKE_MODULE_PATH:!ROOT!/cmake
+- export PATH=$PATH:!ROOT!/test

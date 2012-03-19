@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+#        Dr. D Studios - Software Disclaimer
+#
+# Copyright 2010 Dr D Studios Pty Limited (ACN 127 184 954) (Dr. D Studios), its
+# affiliates and/or its licensors.
+#
+
+${DRD_PYLINT_ROOT}/runtimes/pylint --rcfile=${DRD_PROBE_ROOT}/config/pylintrc $@

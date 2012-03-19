@@ -1,0 +1,31 @@
+config_version : 0
+
+name: napalmDelight
+
+version: 0.24.3
+
+uuid: c19a804a-3562-11e0-a54f-df83576e9674
+
+authors:
+- chris.cooper
+
+description: >
+ delight rendering of napalm data
+
+variants:
+- [ lin64, delight_abi-2 ]
+
+requires:
+- napalm-1.13
+- delight
+- python # version determined by napalm
+- boost # version determined by napalm
+- rendererBindings-1.11
+- delightBoxHelper-0.1
+- delightUtils-0.4
+
+commands:
+- export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:!ROOT!/lib
+- export PYTHONPATH=$PYTHONPATH:!ROOT!/py
+- export CMAKE_MODULE_PATH=$CMAKE_MODULE_PATH:!ROOT!/cmake
+- export PATH=$PATH:!ROOT!/test

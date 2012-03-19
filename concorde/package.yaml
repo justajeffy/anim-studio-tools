@@ -1,0 +1,35 @@
+config_version : 0
+
+name: concorde
+
+version: 2.20.2
+
+uuid: 57f525f4-b557-11df-9b2b-0023ae767476
+
+authors:
+- stephane.bertout
+
+description: >
+ Point Cloud viewer QT-opengl application
+
+variants:
+- [ lin64 ]
+
+requires:
+- grind-2.54
+- gpuStub
+- python # version determined by grind
+- rodin-0
+- meme-0
+- panzer-0
+- pyQt-4
+- pimath-0
+- pyOpenGL-3
+- drd_color-1.9.0
+- vacpy
+
+commands:
+- export CMAKE_MODULE_PATH=$CMAKE_MODULE_PATH:!ROOT!/cmake
+- export PATH=$PATH:!ROOT!/bin
+- export PYTHONPATH=$PYTHONPATH:!ROOT!
+- export DRD_PYTHON_PATH_CONCORDE=!ROOT!

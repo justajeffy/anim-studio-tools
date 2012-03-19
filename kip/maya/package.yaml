@@ -1,0 +1,27 @@
+config_version:  0
+
+name:  kipMaya
+
+version:  0.1.5
+
+uuid:  b97568c6-adb2-11e0-bb3f-0fbe14a11be9
+
+authors:
+- kurian.os
+
+description:  >
+ Tool reading and writting anim curves to maya
+
+variants:
+- [ lin64, python-2.5 ]
+
+requires:
+- maya-2009
+- kip
+
+build_requires:
+- buildTools_miki-0
+
+commands:
+- export PATH=$PATH:!ROOT!/bin
+- export PYTHONPATH=$PYTHONPATH:!ROOT!/code

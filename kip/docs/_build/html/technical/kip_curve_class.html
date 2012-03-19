@@ -1,0 +1,282 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Curve Class Module (kip.kip_curve_class) &mdash; KIP v0.0.3 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.0.3',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="KIP v0.0.3 documentation" href="../index.html" />
+    <link rel="up" title="Technical Documentation" href="index.html" />
+    <link rel="next" title="Napalm Class Module (kip.kip_napalm_class)" href="kip_napalm_class.html" />
+    <link rel="prev" title="Technical Documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="kip_napalm_class.html" title="Napalm Class Module (kip.kip_napalm_class)"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Technical Documentation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">KIP v0.0.3 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Technical Documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-kip.kip_curve_class">
+<span id="kip-tech-kip-curve-class"></span><h1>Curve Class Module (<tt class="docutils literal"><span class="pre">kip.kip_curve_class</span></tt>)<a class="headerlink" href="#module-kip.kip_curve_class" title="Permalink to this headline">¶</a></h1>
+<p>This module is written for creating curve,key and object class.kip_curve_class module depends on 3 main classes <a title="kip.kip_curve_class.ClassObject" class="reference internal" href="#kip.kip_curve_class.ClassObject"><tt class="xref docutils literal"><span class="pre">ClassObject</span></tt></a>, <a title="kip.kip_curve_class.CurveClass" class="reference internal" href="#kip.kip_curve_class.CurveClass"><tt class="xref docutils literal"><span class="pre">CurveClass</span></tt></a> and <a title="kip.kip_curve_class.CurveKeyClass" class="reference internal" href="#kip.kip_curve_class.CurveKeyClass"><tt class="xref docutils literal"><span class="pre">CurveKeyClass</span></tt></a>. This module not depend on any external libs</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This module should be expanded now its written as a base class so its need more structured re writing maybe.</p>
+</div>
+<p>variable list:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="mf">0</span> <span class="o">--</span> <span class="n">CURVE_NAME_KEY</span>
+<span class="mf">1</span> <span class="o">--</span> <span class="n">CURVE_PARM_NAME_KEY</span>
+<span class="mf">2</span> <span class="o">--</span> <span class="n">ANGLULAR_UNITS</span>
+</pre></div>
+</div>
+<dl class="class">
+<dt id="kip.kip_curve_class.ClassObject">
+<em class="property">class </em><tt class="descclassname">kip.kip_curve_class.</tt><tt class="descname">ClassObject</tt><a class="headerlink" href="#kip.kip_curve_class.ClassObject" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Object Class:</dt>
+<dd>This class iterate through each curve from the list and find animation values from the curve and return it as a stucture of array.</dd>
+</dl>
+<p>Base variable list ( animation is expecting a list value always)</p>
+<p>variable list:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="mf">0</span> <span class="o">--</span> <span class="n">name</span>
+<span class="mf">1</span> <span class="o">--</span> <span class="nb">type</span>
+<span class="mf">2</span> <span class="o">--</span> <span class="n">animation</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="kip.kip_curve_class.ClassObject.output">
+<tt class="descname">output</tt><big>(</big><big>)</big><a class="headerlink" href="#kip.kip_curve_class.ClassObject.output" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function will take all inputs from the <cite>init</cite> and it will go through each curve then return a stucture of array.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">stucture of array</td>
+</tr>
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body">array</td>
+</tr>
+</tbody>
+</table>
+<p>Example</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">kip.kip_curve_class</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kipCurveClassObject</span> <span class="o">=</span> <span class="n">ClassObject</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kipCurveClassObject</span><span class="o">.</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;test&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kipCurveClassObject</span><span class="o">.</span><span class="n">type</span><span class="o">=</span><span class="s">&quot;transform&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kipCurveClassObject</span><span class="o">.</span><span class="n">animation</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">kipCurveObject</span><span class="p">)</span><span class="c"># this var always looking for a CurveObject</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">kipCurveClassObject</span><span class="o">.</span><span class="n">output</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="kip.kip_curve_class.CurveClass">
+<em class="property">class </em><tt class="descclassname">kip.kip_curve_class.</tt><tt class="descname">CurveClass</tt><a class="headerlink" href="#kip.kip_curve_class.CurveClass" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Curve Class:</dt>
+<dd>This class will iterate through each key and then it will build a curve class object from the key values.</dd>
+</dl>
+<p>Base variable list (all variable is expecting a list value always)</p>
+<p>variable list:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="mf">0</span> <span class="o">--</span> <span class="n">name</span>
+<span class="mf">1</span> <span class="o">--</span> <span class="n">parm</span>
+<span class="mf">2</span> <span class="o">--</span> <span class="n">parm_attr</span>
+<span class="mf">3</span> <span class="o">--</span> <span class="n">keys</span>
+<span class="mf">4</span> <span class="o">--</span> <span class="n">curve_keys</span> <span class="c"># not needed until you want to return it</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="kip.kip_curve_class.CurveClass.add_key">
+<tt class="descname">add_key</tt><big>(</big><big>)</big><a class="headerlink" href="#kip.kip_curve_class.CurveClass.add_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function will return current key values as a list</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">key values</td>
+</tr>
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="kip.kip_curve_class.CurveClass.output">
+<tt class="descname">output</tt><big>(</big><big>)</big><a class="headerlink" href="#kip.kip_curve_class.CurveClass.output" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function will return the curve class object built from key values.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">array or structured</td>
+</tr>
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+<p>Example</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">kip.kip_curve_class</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kipCurveObject</span> <span class="o">=</span> <span class="n">CurveClass</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kipCurveObject</span><span class="o">.</span><span class="n">keys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kipCurveObject</span><span class="o">.</span><span class="n">parm</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;rotation&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kipCurveObject</span><span class="o">.</span><span class="n">parm_attr</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rotationX</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">kipCurveObject</span><span class="o">.</span><span class="n">output</span><span class="p">()</span><span class="c">#we wont use this way normally.</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="kip.kip_curve_class.CurveKeyClass">
+<em class="property">class </em><tt class="descclassname">kip.kip_curve_class.</tt><tt class="descname">CurveKeyClass</tt><a class="headerlink" href="#kip.kip_curve_class.CurveKeyClass" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Key Class:</dt>
+<dd>This class will creat a key class from user input.</dd>
+</dl>
+<p>Basic init funtion and here is input variable list and all variable is expecting a list value always</p>
+<p>variable list:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="mf">0</span> <span class="o">--</span> <span class="n">in_tan_type</span>
+<span class="mf">1</span> <span class="o">--</span> <span class="n">out_tan_type</span>
+<span class="mf">2</span> <span class="o">--</span> <span class="n">time</span>
+<span class="mf">3</span> <span class="o">--</span> <span class="n">value</span>
+<span class="mf">4</span> <span class="o">--</span> <span class="n">in_angle</span>
+<span class="mf">5</span> <span class="o">--</span> <span class="n">in_weight</span>
+<span class="mf">6</span> <span class="o">--</span> <span class="n">out_angle</span>
+<span class="mf">7</span> <span class="o">--</span> <span class="n">out_weight</span>
+<span class="mf">8</span> <span class="o">--</span> <span class="n">in_slope</span>
+<span class="mf">9</span> <span class="o">--</span> <span class="n">out_slope</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="kip.kip_curve_class.CurveKeyClass.output">
+<tt class="descname">output</tt><big>(</big><big>)</big><a class="headerlink" href="#kip.kip_curve_class.CurveKeyClass.output" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function will out put all key values as a single key ( dict )</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">key</td>
+</tr>
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+<p>Example</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">kip.kip_curve_class</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">key</span> <span class="o">=</span> <span class="n">CurveKeyClass</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kipCurveObject</span> <span class="o">=</span> <span class="n">CurveClass</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">key</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">time</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">key</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">key</span><span class="o">.</span><span class="n">in_angle</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">in_angle</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">key</span><span class="o">.</span><span class="n">out_angle</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">out_angle</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">key</span><span class="o">.</span><span class="n">in_weight</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">in_weight</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">key</span><span class="o">.</span><span class="n">out_weight</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">out_weight</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">etc</span><span class="o">..</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kipCurveObject</span><span class="o">.</span><span class="n">keys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="index.html"
+                                  title="previous chapter">Technical Documentation</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="kip_napalm_class.html"
+                                  title="next chapter">Napalm Class Module (<tt class="docutils literal"><span class="pre">kip.kip_napalm_class</span></tt>)</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/technical/kip_curve_class.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="kip_napalm_class.html" title="Napalm Class Module (kip.kip_napalm_class)"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Technical Documentation"
+             >previous</a> |</li>
+        <li><a href="../index.html">KIP v0.0.3 documentation</a> &raquo;</li>
+          <li><a href="index.html" >Technical Documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+   <div class="footer">
+        &copy; Copyright 2010, Dr.D Studios.
+    
+    Created using <a href="http://drddocs/drd/software/int/apps/Miki/v01_00_05/docs/_build/html/index.html">Miki</a> v01_00_05 (built on <a href="http://sphinx.pocoo.org/">Sphinx</a>).
+    
+    </div>
+
+  </body>
+</html>

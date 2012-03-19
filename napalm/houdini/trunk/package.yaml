@@ -1,0 +1,25 @@
+config_version : 0
+
+name: napalmHoudini
+
+version: 0.0.0
+
+uuid: bbfd5742-1ec5-11e0-a47f-00219b379594
+
+authors:
+- edwin.erdmanis
+
+description: >
+ Napalm related tools for Houdini
+
+variants:
+- [ lin64, python-2.5 ]
+
+requires:
+- napalm-0
+- pimath-0
+- houdini-11.0
+
+commands:
+- export PYTHONPATH=$PYTHONPATH:!ROOT!/python
+- export HOUDINI_PATH=$HOUDINI_PATH:!ROOT!/houdini

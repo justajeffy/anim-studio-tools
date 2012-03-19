@@ -1,0 +1,32 @@
+config_version : 0
+
+name: dgal
+
+version: 0.5.0
+
+uuid: 78624496-92f3-11e0-b10b-002564afe6ee
+
+authors:
+- allan.johns
+
+description: >
+ drd's computational Graphics Algorithm Library.
+
+variants:
+- [ lin64 ]
+
+requires:
+- ilmbase-1.0.2
+- boost-1.37.0
+- boost_process
+- pystring
+- tbb-2.2
+- qhull-6.2+<7
+
+
+commands:
+- export CMAKE_MODULE_PATH=$CMAKE_MODULE_PATH:!ROOT!/cmake
+
+# for testing only, remove later41- export PATH=$PATH:!ROOT!/test
+- export MAYA_PLUG_IN_PATH=$MAYA_PLUG_IN_PATH:!ROOT!/plugins
+

@@ -1,0 +1,16 @@
+[nosetests]
+
+# Enable plugin Coverage: Activate a coverage report using Ned Batchelder's 
+# coverage module.
+with-coverage=1
+
+# Enable plugin Xunit: This plugin provides test results in the standard XUnit 
+# XML format.
+with-xunit=1
+
+# Enable plugin XCoverage:  Add Cobertura-style XML coverage reports to the 
+# built-in nose.plugins.cover plugin.
+with-xcoverage=1
+
+# Enable plugin ColorOutputPlugin: Output test results in colour to terminal.
+with-color=1

@@ -1,0 +1,27 @@
+config_version:  0
+
+name:  kipNuke
+
+version:  0.1.0
+
+uuid:  f1180ba4-adb1-11e0-9ffb-6f6dd685a302
+
+authors:
+- kurian.os
+
+description:  >
+ Tool reading and writting anim curves to nuke
+
+variants:
+- [ lin64, python-2.5 ]
+
+requires:
+- nuke-6+<7
+- kip
+
+build_requires:
+- buildTools_miki-0
+
+commands:
+- export PATH=$PATH:!ROOT!/bin
+- export PYTHONPATH=$PYTHONPATH:!ROOT!/code
