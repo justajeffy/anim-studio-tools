@@ -1,0 +1,61 @@
+<ul id="dsUsedList">
+<% 
+  if @graph 
+    @graph.graph_datasources.find(:all, :order => "sortorder ASC").each do |graphDatasource|
+-%>
+  <li id="dsUsed_li_<%= graphDatasource.datasource.id %>" class="dsUsed" onMouseOver="this.style.cursor='pointer'">
+    <table cellspacing="0" cellpadding="0">
+      <tr>
+        <td valign="middle">
+          &nbsp;
+          <a href="Javascript: void(0)">
+          <% sign = (graphDatasource.negative) ? 'negative' : 'positive' -%>
+            <img id="dsUsed_img_<%= graphDatasource.datasource.id %>" title="<%= sign %>" onClick="toggle_sign(this, <%= graphDatasource.datasource.id %>)" src="/images/gui/toggle_<%= sign %>.png" width="16" height="16" border="0" /></span>
+            <input type="hidden" id="dsUsed_sign_<%= graphDatasource.datasource.id %>" name="datasources_signs[]" value="<%= graphDatasource.datasource.id %>_<%= sign %>" />
+          </a>
+        </td>
+        <td valign="middle"><span id="dsUsed_<%= graphDatasource.datasource.id %>" title="Right-click to remove, Drag to sort"><%= graphDatasource.datasource.name %></span></td>
+      </tr>
+    </table>
+  </li>
+<%
+    end
+  end
+-%>
+</ul>
+
+<script type="text/javascript">
+    new Proto.Menu({ selector: 'li([class*="dsUsed"])', 
+                     className: 'menu desktop', 
+                     menuItems: [{name: 'Remove Datasource', 
+                                  className: 'deleteDs', 
+                                  callback: function(event){ 
+                                      var dsId = event.element().id.split('_').last();
+                                  
+                                      new Ajax.Request('/show/removeDs', { 
+                                          method: 'post', 
+                                          parameters: { 
+                                              gr: <%= @graph.id if @graph %>, 
+                                              ds: dsId
+                                          },
+                                          onSuccess: function(request){ 
+                                          
+                                              // Remove the element from page
+                                              //event.element().remove();
+                                              $('dsUsed_li_' + dsId).remove();
+                                          }
+                                      });
+                                  }
+                                 }]
+                   });           
+   
+    Sortable.create('dsUsedList', {
+        scroll: 'dsUsed',
+        onUpdate: function(element) {
+            new Ajax.Request('/show/sortDatasources', {
+                method: 'post',
+                parameters: { data: Sortable.serialize("dsUsedList"), graphid: <%= @graph.id if @graph %> }
+            });
+        }
+    }); 
+</script>

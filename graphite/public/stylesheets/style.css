@@ -1,0 +1,444 @@
+body, p, ol, td {
+  font-family: Verdana;
+  font-size:   0.8em;
+  line-height: 1.2;
+  margin:      0;
+  padding:     0;
+}
+
+body { background-color: #fff; color: #000; height: 100%; }
+
+table, tr, td, th { font-size: 11px; line-height: 1.2; }
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+input {
+  font-family: Verdana, Lucida, Helvetica, Arial, sans-serif;
+}
+
+div#header {
+  height: 60px;
+  background:url(/images/gui/hd_bg.gif) repeat-x;
+}
+
+div#header .logo {
+  float:right;
+  font-size: 1.5em;
+  color: #fff;
+  margin-right:20px;
+}
+
+div#header .info {
+  float: left;
+  font-size: 12px;
+  line-height: 16px;
+  padding-top: 5px;
+  padding-left: 15px;
+  color: #000;
+}
+
+div#header .info a {
+  color: #111;
+  margin-left:10px;
+  text-decoration:none;
+  font-size:11px;
+  padding:3px 3px 3px 3px;
+}
+
+div#header .info a:hover {
+  color: #055;
+}
+
+div#header .info a.bug {
+  margin-left: 20px;
+}
+
+div#header .logo {
+  float:right;
+  height:79px;
+  margin-right:20px;
+}
+
+div#header .controls {
+  float: right;
+  padding-top: 10px;
+  padding-right: 5px;
+}
+
+div#level {
+  background-image: url(/images/gui/tab_bg.gif)
+}
+
+ul#navigation {
+  position:absolute;
+  width:100%;
+  left:0px;
+  /* top:56px; */
+  margin:0;
+  padding:0;
+  border:0;
+  list-style-type:none;
+  height:23px;
+}
+
+ul#navigation li {
+  margin:0;
+  padding:0;
+  border:0;
+  float:left;
+}
+
+ul#navigation li.first {
+  margin-left:10px;
+}
+
+
+ul#navigation li.system {
+  float:left;
+  margin-left:0px;
+}
+
+ul#navigation li.accounts {
+  float:left;
+  margin-left:0px;
+}
+
+table#navigation td a {
+  display:block;
+  text-indent:0;
+  width:114px;
+  height:18px;
+  padding-top:5px;
+  background:url(/images/gui/tabnav.gif) 0px 0px;
+  color:white;
+  font-size:11px;
+  font-weight:bold;
+  text-align:center;
+  text-decoration:none;
+}
+
+table#navigation td a.active {
+  color:#3e3e3e;
+  background:url(/images/gui/tabnav.gif) 228px 0px;
+}
+
+table#navigation td a:hover {
+  color:#3e3e3e;
+  background:url(/images/gui/tabnav.gif) 342px 0px;
+}
+
+ul#navigation li a.admin {
+  color:#fff;
+  background:url(/images/gui/tabnav.gif) 114px 0px;
+}
+
+ul#navigation2 {
+  position:absolute;
+  width:100%;
+  left:10px;
+  top:80px;
+  margin:0;
+  padding:0;
+  border:0;
+  list-style-type:none;
+  height:23px;
+}
+
+ul#navigation2 li {
+  margin:0;
+  padding:0;
+  border:0;
+  float:left;
+}
+
+ul#navigation2 li.first {
+  margin-left:20px;
+}
+
+
+ul#navigation2 li.system {
+  float:left;
+  margin-left:0px;
+}
+
+ul#navigation2 li.accounts {
+  float:left;
+  margin-left:0px;
+}
+
+ul#navigation2 li a {
+  display:block;
+  text-indent:0;
+  width:114px;
+  height:18px;
+  padding-top:5px;
+  background:url(/images/gui/tabnav.gif) 0px 0px;
+  color:white;
+  font-size:12px;
+  font-weight:bold;
+  text-align:center;
+  text-decoration:none;
+}
+
+ul#navigation2 li a.active {
+  color:#3e3e3e;
+  background:url(/images/gui/tabnav.gif) 228px 0px;
+}
+
+ul#navigation2 li a:hover {
+  color:#3e3e3e;
+  background:url(/images/gui/tabnav.gif) 342px 0px;
+}
+
+ul#navigation2 li a.admin {
+  color:#fff;
+  background:url(/images/gui/tabnav.gif) 114px 0px;
+}
+
+ul#graphs {
+    position: absolute;
+    list-style: none;
+    padding-left: 15px;
+}
+
+ul#tables {
+    position: absolute;
+    list-style: none;
+    padding-left: 15px;
+}
+
+ul#dsUsedList {
+    position: absolute;
+    list-style: none;
+    padding-left: 0px;
+    padding-top: 0px;    
+}
+
+div#content {
+  background: #fff;
+  clear:both;
+}
+
+div.line {
+  position:relative;
+  padding-left:15px;
+  padding-right:10px;
+  padding-top:7px;
+  padding-bottom:0px;
+  height:0px;
+  overflow:hidden;
+  background:url(/images/gui/unit-menu-background.gif) repeat-x;
+}
+div.toolbar {
+  position:relative;
+  padding-left:15px;
+  padding-right:10px;
+  padding-top:7px;
+  padding-bottom:0px;
+  height:18px;
+  overflow:hidden;
+  background:url(/images/gui/unit-menu-background.gif) repeat-x;
+}
+
+div#search-delete-button {
+  background:url(/images/gui/delete-search.gif) 0px 0px;
+  width:17px;
+  height:21px;
+  margin-left:5px;
+  cursor:pointer;
+}
+
+div#view-thumbs-button {
+  background:url(/images/gui/assets-thumbnail-view.gif) 0px 0px;
+  width:26px;
+  height:21px;
+  float:left;
+  cursor:pointer;
+}
+div#view-thumbs-button.active {
+  background:url(../images/gui/assets-thumbnail-view.gif) 26px 0px;
+}
+
+div#refresh-button {
+  background:url(../images/gui/assets-refresh.gif) 0px 0px;
+  width:27px;
+  height:21px;
+  margin-right:10px;
+  float:left;
+  cursor:pointer;
+}	
+
+div.toolbar>div#refresh-button {
+  margin-right:10px;
+}
+
+div#view-list-button {
+  background:url(../images/gui/assets-list-view.gif) 0px 0px;
+  width:27px;
+  height:21px;
+  float:left;
+  cursor:pointer;
+}
+
+div#view-list-button.active {
+  background:url(../images/gui/assets-list-view.gif) 27px 0px;
+}
+
+div#toolbar-container {
+  overflow: hidden;
+}
+
+tr#userlist_head {
+  background-color: #ebe9e9;
+}
+
+tr#list_even {
+  background-color: #ecf2fe;
+}        
+            
+tr#list_odd {
+  background-color: #fff;
+}
+
+div.menubar {
+  overflow:hidden;
+  height:47px;
+  font-size:11px;
+  background:url(../images/gui/menu-back.gif) repeat-x;
+}
+
+div.menubar div.button {
+  float:left;
+  text-align:center;
+  margin-right:20px;
+  color: #aaa;
+  padding-top: 5px;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-bottom: 4px;
+  margin-top: -5px;
+}
+
+div.menubar div.button.active {
+  cursor: pointer;
+  color: #333;
+}
+
+div.menubar div.button.active.panel {
+  cursor: pointer;
+  color: #333;  
+  border-bottom: 1px solid #b7b7b7;
+  border-left: 1px solid #b7b7b7;
+  border-right: 1px solid #b7b7b7;
+  background-color: #f4f4f4;
+  padding-left: 3px;
+  padding-right: 3px;
+  padding-bottom: 1px;
+}
+
+div.menubar div.button div {
+  margin-left:auto;
+  margin-right:auto;
+  width:43px;
+  height:29px;
+  background-position: 0 0;
+  background-repeat: no-repeat;  
+} 
+
+div.menubar div.button.active div {
+  background-position: -43px 0px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+div.menubar div.button.active.panel div {
+  background-position: -86px 0px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+div#add-button div {
+  background-image:url(../images/gui/menu-new.gif);
+}
+
+div#add-user-button div {
+  background-image:url(../images/gui/panel-add-user.jpg);
+}
+
+div#edit-button div {
+  background-image:url(../images/gui/menu-edit.gif);
+}
+
+div#preview-button div {
+  background-image:url(../images/gui/menu-preview.gif);
+}
+
+div#tags-button {
+  margin-left:30px;
+}
+
+div#security-button div {
+  background-image:url(../images/gui/panel-user-rights.jpg);
+}
+
+div#metadata-button div {
+  background-image:url(../images/gui/menu-details.gif);
+}
+
+div#download-button, div#stage-button {
+  margin-left:30px;
+}
+
+div#download-button div {
+  background-image:url(../images/gui/menu-download.gif);
+}
+
+div#delete-button div {
+  background-image:url(../images/gui/menu-delete.gif);
+}
+
+div#delete-button {
+  margin-left:30px;
+}
+
+div.main-panel {
+  background: #fff;
+  font-size:0.7em;
+  line-height:1.0;
+  overflow:auto;
+  clear:both;
+  position:fixed;
+  bottom: 0px;
+}
+
+div#tree {
+	height: 600px;
+	font-size:1.2em;
+	overflow:auto; 
+	background: white;
+	padding: 10px 10px 30px 10px;
+}
+
+div#userlist {
+	font-size:1.2em;
+	height:624px; 
+	overflow:auto; 
+	background: white; 
+	border: 1px solid #eee;
+}
+
+tr#userlist_head {
+	font-size:0.8em;
+}
+
+/*
+div#preview {
+	background-color:#000;
+}
+*/

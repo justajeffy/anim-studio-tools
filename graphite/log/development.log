@@ -1,0 +1,111 @@
+  [4;36;1mSQL (0.3ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing ApplicationController#index (for 10.19.33.130 at 2009-05-18 16:39:14) [POST]
+
+ActionController::RoutingError (No route matches "/graphit/editGraph/64" with {:method=>:post}):
+  /usr/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+  /usr/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+  /usr/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+  /usr/lib/ruby/1.8/webrick/server.rb:162:in `start'
+  /usr/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+  /usr/lib/ruby/1.8/webrick/server.rb:95:in `start'
+  /usr/lib/ruby/1.8/webrick/server.rb:92:in `each'
+  /usr/lib/ruby/1.8/webrick/server.rb:92:in `start'
+  /usr/lib/ruby/1.8/webrick/server.rb:23:in `start'
+  /usr/lib/ruby/1.8/webrick/server.rb:82:in `start'
+
+Rendering rescues/layout (not_found)
+  [4;36;1mSQL (0.3ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing ShowController#tab (for 10.19.33.130 at 2009-05-18 16:40:18) [GET]
+  Parameters: {"id"=>"34", "end"=>"", "height"=>"", "duration"=>"", "width"=>""}
+  [4;36;1mTab Columns (1.8ms)[0m   [0;1mSHOW FIELDS FROM `tabs`[0m
+  [4;35;1mTab Load (0.4ms)[0m   [0mSELECT * FROM `tabs` WHERE (`tabs`.`name` = 'user_admin' AND `tabs`.`parent_id` = 1) LIMIT 1[0m
+  [4;36;1mTab Load (0.4ms)[0m   [0;1mSELECT * FROM `tabs` WHERE (`tabs`.`id` = 34) [0m
+  [4;35;1mTab Load (0.3ms)[0m   [0mSELECT * FROM `tabs` WHERE (`tabs`.`id` = 1) [0m
+  [4;36;1mTab Load (0.5ms)[0m   [0;1mSELECT * FROM `tabs` WHERE (`tabs`.`id` = 0) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `tabs` WHERE (`tabs`.`id` = 0) [0m
+  [4;36;1mTab Load (0.5ms)[0m   [0;1mSELECT * FROM `tabs` WHERE (parent_id IS NULL) ORDER BY name[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mSELECT count(*) AS count_all FROM `tabs` WHERE (`tabs`.parent_id = 34) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `tabs` WHERE (`tabs`.`id` = 34) [0m
+  [4;35;1mGraph Load (0.4ms)[0m   [0mSELECT * FROM `graphs` WHERE (`graphs`.tab_id = 34) ORDER BY sortorder ASC[0m
+  [4;36;1mGraph Columns (1.5ms)[0m   [0;1mSHOW FIELDS FROM `graphs`[0m
+  [4;35;1mGraphDatasource Load (0.6ms)[0m   [0mSELECT * FROM `graph_datasources` WHERE (`graph_datasources`.graph_id = 64) ORDER BY sortorder ASC[0m
+  [4;36;1mGraphDatasource Columns (0.7ms)[0m   [0;1mSHOW FIELDS FROM `graph_datasources`[0m
+  [4;35;1mDatasource Columns (37.3ms)[0m   [0mSHOW FIELDS FROM `datasources`[0m
+  [4;36;1mDatasource Load (0.8ms)[0m   [0;1mSELECT * FROM `datasources` WHERE (`datasources`.`id` = 5098) [0m
+  [4;35;1mDatasource Load (0.4ms)[0m   [0mSELECT * FROM `datasources` WHERE (`datasources`.`id` = 5096) [0m
+  [4;36;1mDatasource Load (0.4ms)[0m   [0;1mSELECT * FROM `datasources` WHERE (`datasources`.`id` = 5099) [0m
+  [4;35;1mDatasource Load (0.4ms)[0m   [0mSELECT * FROM `datasources` WHERE (`datasources`.`id` = 8624) [0m
+  [4;36;1mDatasource Load (0.4ms)[0m   [0;1mSELECT * FROM `datasources` WHERE (`datasources`.`id` = 5111) [0m
+  [4;35;1mDatasource Load (0.4ms)[0m   [0mSELECT * FROM `datasources` WHERE (`datasources`.`id` = 5097) [0m
+  [4;36;1mDatasource Load (0.4ms)[0m   [0;1mSELECT * FROM `datasources` WHERE (`datasources`.`id` = 8165) [0m
+  [4;35;1mDatasource Load (0.5ms)[0m   [0mSELECT * FROM `datasources` WHERE (`datasources`.`id` = 5100) [0m
+  [4;36;1mDatasource Load (0.4ms)[0m   [0;1mSELECT * FROM `datasources` WHERE (`datasources`.`id` = 8623) [0m
+  [4;35;1mGraphDatasource Load (0.3ms)[0m   [0mSELECT * FROM `graph_datasources` WHERE (`graph_datasources`.graph_id = 67) ORDER BY sortorder ASC[0m
+  [4;36;1mDatasource Load (0.4ms)[0m   [0;1mSELECT * FROM `datasources` WHERE (`datasources`.`id` = 5682) [0m
+  [4;35;1mDatasource Load (0.4ms)[0m   [0mSELECT * FROM `datasources` WHERE (`datasources`.`id` = 5683) [0m
+  [4;36;1mDatasource Load (0.4ms)[0m   [0;1mSELECT * FROM `datasources` WHERE (`datasources`.`id` = 5121) [0m
+  [4;35;1mDatasource Load (0.4ms)[0m   [0mSELECT * FROM `datasources` WHERE (`datasources`.`id` = 5119) [0m
+  [4;36;1mGraphDatasource Load (0.4ms)[0m   [0;1mSELECT * FROM `graph_datasources` WHERE (`graph_datasources`.graph_id = 72) ORDER BY sortorder ASC[0m
+  [4;35;1mDatasource Load (0.4ms)[0m   [0mSELECT * FROM `datasources` WHERE (`datasources`.`id` = 8468) [0m
+  [4;36;1mDatasource Load (0.4ms)[0m   [0;1mSELECT * FROM `datasources` WHERE (`datasources`.`id` = 8470) [0m
+  [4;35;1mDatasource Load (0.4ms)[0m   [0mSELECT * FROM `datasources` WHERE (`datasources`.`id` = 8471) [0m
+  [4;36;1mDatasource Load (0.4ms)[0m   [0;1mSELECT * FROM `datasources` WHERE (`datasources`.`id` = 8469) [0m
+  [4;35;1mGraph Load (0.6ms)[0m   [0mSELECT * FROM `graphs` [0m
+  [4;36;1mGraphDatasource Load (0.4ms)[0m   [0;1mSELECT * FROM `graph_datasources` [0m
+Rendering template within layouts/application
+Rendering show/tab
+Rendered show/_header (1.6ms)
+  [4;35;1mTab Load (0.5ms)[0m   [0mSELECT * FROM `tabs` WHERE (`tabs`.parent_id = 1) ORDER BY name[0m
+Rendered show/_navigation (4.1ms)
+Rendered show/_toolbar (0.6ms)
+Rendered show/_graphs (0.7ms)
+Completed in 157ms (View: 39, DB: 55) | 200 OK [http://graphite.drd.mgt/show/tab/34?width=&height=&duration=&end=]
+  [4;36;1mSQL (0.3ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing ShowController#editGraph (for 10.19.33.130 at 2009-05-18 16:40:23) [POST]
+  Parameters: {"id"=>"64"}
+  [4;36;1mGraph Columns (1.9ms)[0m   [0;1mSHOW FIELDS FROM `graphs`[0m
+  [4;35;1mGraph Load (0.3ms)[0m   [0mSELECT * FROM `graphs` WHERE (`graphs`.`id` = 64) [0m
+Rendered show/_graphForm (6.8ms)
+Rendered show/_editGraph (9.7ms)
+Completed in 22ms (View: 12, DB: 3) | 200 OK [http://graphite.drd.mgt/show/editGraph/64]
+  [4;36;1mSQL (0.3ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing ShowController#dsAvailable (for 10.19.33.130 at 2009-05-18 16:40:23) [POST]
+  [4;36;1mDatasource Columns (2.0ms)[0m   [0;1mSHOW FIELDS FROM `datasources`[0m
+  [4;35;1mDatasource Load (0.5ms)[0m   [0mSELECT * FROM `datasources` WHERE (`datasources`.`id` = 1) [0m
+  [4;36;1mDatasource Load (3.7ms)[0m   [0;1mSELECT * FROM `datasources` WHERE (`datasources`.parent_id = 1) ORDER BY name[0m
+Rendered show/_dsAvailable (11.0ms)
+Completed in 99ms (View: 85, DB: 7) | 200 OK [http://graphite.drd.mgt/show/dsAvailable]
+  [4;35;1mSQL (0.6ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing ShowController#dsUsed (for 10.19.33.130 at 2009-05-18 16:40:23) [POST]
+  Parameters: {"type"=>"edit", "id"=>"64"}
+  [4;35;1mGraph Columns (1.3ms)[0m   [0mSHOW FIELDS FROM `graphs`[0m
+  [4;36;1mGraph Load (0.4ms)[0m   [0;1mSELECT * FROM `graphs` WHERE (`graphs`.`id` = 64) [0m
+  [4;35;1mGraphDatasource Load (0.4ms)[0m   [0mSELECT * FROM `graph_datasources` WHERE (`graph_datasources`.graph_id = 64) ORDER BY sortorder ASC[0m
+  [4;36;1mGraphDatasource Columns (1.6ms)[0m   [0;1mSHOW FIELDS FROM `graph_datasources`[0m
+  [4;35;1mDatasource Columns (0.9ms)[0m   [0mSHOW FIELDS FROM `datasources`[0m
+  [4;36;1mDatasource Load (0.3ms)[0m   [0;1mSELECT * FROM `datasources` WHERE (`datasources`.`id` = 5098) [0m
+  [4;35;1mDatasource Load (1.6ms)[0m   [0mSELECT * FROM `datasources` WHERE (`datasources`.`id` = 5096) [0m
+  [4;36;1mDatasource Load (1.4ms)[0m   [0;1mSELECT * FROM `datasources` WHERE (`datasources`.`id` = 5099) [0m
+  [4;35;1mDatasource Load (0.8ms)[0m   [0mSELECT * FROM `datasources` WHERE (`datasources`.`id` = 8624) [0m
+  [4;36;1mDatasource Load (0.4ms)[0m   [0;1mSELECT * FROM `datasources` WHERE (`datasources`.`id` = 5111) [0m
+  [4;35;1mDatasource Load (0.3ms)[0m   [0mSELECT * FROM `datasources` WHERE (`datasources`.`id` = 5097) [0m
+  [4;36;1mDatasource Load (0.4ms)[0m   [0;1mSELECT * FROM `datasources` WHERE (`datasources`.`id` = 8165) [0m
+  [4;35;1mDatasource Load (0.3ms)[0m   [0mSELECT * FROM `datasources` WHERE (`datasources`.`id` = 5100) [0m
+  [4;36;1mDatasource Load (0.4ms)[0m   [0;1mSELECT * FROM `datasources` WHERE (`datasources`.`id` = 8623) [0m
+Rendered show/_dsUsed (41.4ms)
+Completed in 55ms (View: 37, DB: 11) | 200 OK [http://graphite.drd.mgt/show/dsUsed/64?type=edit]

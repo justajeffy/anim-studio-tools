@@ -1,0 +1,10 @@
+<ul id="graphs">
+<% @graphs.each { |graph| -%>
+  <li id="item_<%= graph[0] %>">
+    <div id="graph_<%= graph[0] %>_container" >
+      <img id="graph_<%= graph[0] %>" src="<%= graph[2] %>" title="<%= graph[1] %>" />
+      <script>graphIds.push('graph_<%= graph[0] %>');</script>
+    </div>
+  </li>
+<% } -%>
+</ul>

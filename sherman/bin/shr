@@ -1,0 +1,162 @@
+#!/bin/env python2.5
+import re, pwd, time
+from optparse import OptionParser
+from tables import *
+
+SHERMAN = '/drd/software/int/sys/sherman/output/sherman.h5'
+
+def list(path, user=None):
+
+	children = []
+
+	# Open h5 file
+	h5 = openFile(SHERMAN, "r")
+	for child in h5.listNodes(path, classname='Group'):
+
+		lmod = time.strftime("%b %d %Y %H:%M", time.localtime(int(child._v_attrs.modified)))
+
+		# Check for filters and apply
+		if user:
+
+			table  = child._f_getChild('MetaData')
+
+			# Convert username to uid
+			try:
+				uid = pwd.getpwnam(user)[2]
+			except:
+				uid = int(user)
+
+			values = [ x.fetch_all_fields() for x in table.where("(category == 'user') & (name == '%s')" % uid) ]
+
+			if len(values) > 0:
+				size   = values[0][3]
+				nfiles = values[0][2]
+			
+				children.append({ 'objectID': child._v_objectID,
+								  'name': child._v_name,
+								  'pathname': child._v_pathname,
+								  'size': size,
+								  'nfiles': nfiles,
+								  'lmod': lmod
+								})
+
+		else:
+			children.append({ 'objectID': child._v_objectID,
+							  'name': child._v_name,
+							  'pathname': child._v_pathname,
+							  'size': child._v_attrs.size,
+							  'nfiles': child._v_attrs.nfiles,
+							  'lmod': lmod
+							})
+	
+	h5.close()
+
+	return children
+
+def recurse(path, user=None, depth=1):
+
+	h5 = openFile(SHERMAN, "r")
+	nodes = listNodes(path, h5, [], user)
+	h5.close()
+
+	return sorted(nodes, key=lambda k: k['size'])
+
+def listNodes(path, h5, nodes, user):
+
+	for node in h5.listNodes(path, classname='Group'):
+
+		# Don't worry if directory is less than 100G
+		if not user and node._v_attrs.size < 1000000000000: 
+			continue
+	
+		lmod = time.strftime("%b %d %Y %H:%M", time.localtime(int(node._v_attrs.modified)))
+
+		if user:
+
+			table  = node._f_getChild('MetaData')
+
+			# Convert username to uid
+			try:
+				uid = pwd.getpwnam(user)[2]
+			except:
+				uid = int(user)
+
+			values = [ x.fetch_all_fields() for x in table.where("(category == 'user') & (name == '%s')" % uid) ]
+
+			if len(values) > 0:
+				size   = values[0][3]
+				nfiles = values[0][2]
+
+				nodes.append({ 'objectID': node._v_objectID,
+							   'name': node._v_pathname,
+							   'size': size,
+							   'nfiles': nfiles,
+							   'lmod': lmod
+							})
+			else:
+				
+				# User has nothing in this directory and any subdirectories, so move on
+				continue
+		else:
+
+			nodes.append({ 'objectID': node._v_objectID,
+				   		   'name': node._v_pathname,
+						   'size': node._v_attrs.size,
+						   'nfiles': node._v_attrs.nfiles,
+						   'lmod': lmod
+						})
+
+		listNodes(node._v_pathname, h5, nodes, user)
+
+	return nodes
+
+
+def format(children, readable):
+	output = ""
+
+	for child in children:
+
+		size = child['size']
+
+		if readable:
+			size = convert(size)
+
+		output += '%7d %13s %10s %s\n' % ( child['nfiles'], size, child['lmod'], child['name'] )
+
+	print output
+
+def convert(size):
+
+	s = ''
+	for l in ('K', 'M', 'G', 'T'):
+		if size > 1024:
+			size /= 1024.0
+			s = "%3.2f%s" % (size, l)
+	
+	return s
+
+if __name__ == '__main__':
+
+	# Parse arguments
+	parser = OptionParser("usage: %prog [options] path")
+	parser.add_option("-u", "--user", dest="user", type="string", help="Filter by user")
+	parser.add_option("-r", dest="readable", action="store_true", help="Human readable format", default=False)
+	parser.add_option("-R", "--recursive", dest="recursive", action="store_true", help="List subdirectories recursively", default=False)
+
+	(options, args) = parser.parse_args()
+
+	if len(args) < 1:
+		parser.error("incorrect number of arguments")
+
+	path      = args[0]
+	user      = options.user
+	readable  = options.readable
+	recursive = options.recursive
+
+	# Get rid of trailing slash if exists
+	path = path[-1] == '/' and path[:-1] or path
+
+	if recursive:
+		format( recurse(path, user), readable )
+	else:
+		format( list(path, user), readable )

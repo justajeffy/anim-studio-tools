@@ -1,0 +1,20 @@
+<div id="editTab" style="padding: 5px 5px 5px 5px;">
+    <fieldset>
+        <legend>Tab Properties</legend>
+        <table width="100%" border="0" cellspacing="5" cellpadding="5">
+            <tr>
+                <td align="right">Name</td>
+                <td width="10">&nbsp;</td>                
+                <td><input id="tabName" type="text" size="25" name="tabName" value="<%= @tabname if @tabname %>" /></td>
+            </tr>
+            <tr>
+                <td colspan="3" align="right"><input type="submit" name="save" value="Save" /></td>
+            </tr>            
+        </table>
+    </fieldset>
+</div>
+<script type="text/javascript">
+    
+    // Set the focus to the name field
+    $('tabName').focus();
+</script>

@@ -1,0 +1,34 @@
+<div id="header">
+	<div class="info">
+	  <table>
+	    <tr>
+	      <td><small>Graphs:</small></td>
+        <td><small><%= @graphCount %></small></td>
+      </tr>
+	    <tr>
+	      <td><small>Datasources:</small></td>
+        <td><small><%= @dsCount %></small></td>
+      </tr>
+	  </table>
+  </div>
+	<div class="controls">
+		<form action="" method="get">
+			<table width="150" border="0" cellpadding="3" cellspacing="3">
+				<tr>
+					<td align="right" valign="middle">Width:</td>
+					<td><input name="width" type="text" size="10" value="<%= params[:width] if params[:width] %>" /></td>
+					<td align="right" valign="middle">Height:</td>
+					<td><input name="height" type="text" size="10" value="<%= params[:height] if params[:height] %>" /></td>
+					<td align="center">&nbsp;</td>
+				</tr>
+				<tr>
+					<td align="right" valign="middle">Duration:</td>
+					<td><input name="duration" type="text" size="10" value="<%= params[:duration] if params[:duration] %>" /></td>
+					<td align="right" valign="middle">End:</td>
+					<td><input name="end" type="text" size="10" value="<%= params[:end] if params[:end] %>" /></td>
+					<td><input type="submit" value="Set" /></td>
+				</tr>
+			</table>
+		</form>
+	</div>		
+</div>

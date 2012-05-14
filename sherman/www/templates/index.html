@@ -1,0 +1,698 @@
+<html>
+    <head>
+        <title>Sherman</title>
+        <link rel="stylesheet" type="text/css" href="/media/stylesheets/resources/ext-all.css" />
+        <link rel="stylesheet" type="text/css" href="/media/stylesheets/resources/xtheme-slate.css" />
+        <link rel="stylesheet" type="text/css" href="/media/stylesheets/ux/css/ColumnNodeUI.css" />
+        <link rel="icon" type="image/png" href="/media/stylesheets/favicon.ico" />
+        <style type="text/css">
+            html, body {
+                font: normal 12px verdana;
+                margin: 0;
+                padding: 0;
+                border: 0 none;
+                overflow: hidden;
+                height: 100%;
+            }
+            
+            p {
+                margin: 5px;
+            }
+            
+            .settings {
+                background-image: url(/media/stylesheets/icons/fam/folder_wrench.png);
+            }
+            
+            .nav {
+                background-image: url(/media/stylesheets/icons/fam/folder_go.png);
+            }
+            
+            .x-grid3-row td {
+                font-size: 13px;
+                text-align: right;
+            }
+            
+            .x-tree-col-text {
+                font-size: 13px;
+                text-align: right;
+            }
+            
+            .x-tree-node-anchor {
+                font-size: 13px;
+            }
+            
+            .type {
+                background-image: url(/media/stylesheets/famfam/page_copy.png) !important;
+            }
+            
+            .user {
+                background-image: url(/media/stylesheets/famfam/group.png) !important;
+            }
+            
+            .graph {
+                background-image: url(/media/stylesheets/famfam/time.png) !important;
+            }
+            
+            .pie {
+                background-image: url(/media/stylesheets/famfam/chart_pie.png) !important;
+            }
+            
+            .email {
+                background-image: url(/media/stylesheets/famfam/email.png) !important;
+            }
+
+            .email-link {
+                background-image: url(/media/stylesheets/famfam/email_link.png) !important;
+            }
+
+            .link {
+                background-image: url(/media/stylesheets/famfam/link.png) !important;
+            }
+
+            .facebook {
+                background-image: url(/media/stylesheets/famfam/facebook.png) !important;
+            }
+
+            .twitter {
+                background-image: url(/media/stylesheets/famfam/twitter.png) !important;
+            }
+
+            a.sortHeader {
+                background-image: url(media/stylesheets/images/slate/grid/grid3-hrow-over.gif) !important;
+            }
+            
+            a.x-tree-hd {
+                text-decoration: none;
+                background-image: url(media/stylesheets/images/slate/grid/grid3-hrow.gif);
+            }
+            
+            .pieLabel div {
+                font-size: 10px;
+                border: 1px solid gray;
+                background: yellow;
+                padding: 1px;
+                text-align: center;
+            }
+        </style>
+        <script type="text/javascript" src="/media/javascripts/adapter/ext/ext-base.js" />
+        <script type="text/javascript" src="/media/javascripts/ext-all.js" />
+        <script type="text/javascript" src="/media/javascripts/ux/ColumnNodeUI.js" />
+        <script type="text/javascript" src="/media/javascripts/ux/LocationField.js" />
+        <script type="text/javascript" src="/media/javascripts/ux/FilterField.js" />
+        <script type="text/javascript" src="/media/javascripts/jquery.js" />
+        <script type="text/javascript" src="/media/javascripts/jquery.sparkline.min.js" />
+        <script type="text/javascript" src="/media/javascripts/jquery.tinysort.min.js" />
+        <script type="text/javascript" src="/media/javascripts/jquery.flot.pie.pack.js" />
+        <script type="text/javascript" src="/media/javascripts/excanvas.pack.js" />
+        <script type="text/javascript" src="/media/javascripts/sherman.js" />
+        <script type="text/javascript">
+            
+			var sitename = 'sherman';
+            var selected = '/drd';
+            
+            Ext.onReady(function(){
+            
+                var path     = Ext.fly('path').getAttribute('path').replace(/%20/g, " ");
+                var filter   = Ext.fly('filter').getAttribute('filter');
+                var category = parseInt(Ext.fly('category').getAttribute('category'));
+                var chart    = parseInt(Ext.fly('chart').getAttribute('chart'));
+                
+                Ext.QuickTips.init();
+                
+                // Data Store for the category grids
+                var typeStore = new Ext.data.Store({
+                    autoDestroy: true,
+                    
+                    url: '/category',
+                    reader: new Ext.data.JsonReader({}, [{
+                        name: 'name',
+                        mapping: 'name'
+                    }, {
+                        name: 'nfiles',
+                        mapping: 'nfiles'
+                    }, {
+                        name: 'size',
+                        mapping: 'size'
+                    }]),
+                    
+                    sortInfo: {
+                        field: 'size',
+                        direction: 'DESC'
+                    },
+                    baseParams: {
+                        category: 'type',
+                        path: selected
+                    }
+                });
+                
+                // Data Store for the category grids
+                var userStore = new Ext.data.Store({
+                    autoDestroy: true,
+                    
+                    url: '/category',
+                    reader: new Ext.data.JsonReader({}, [{
+                        name: 'name',
+                        mapping: 'name'
+                    }, {
+                        name: 'nfiles',
+                        mapping: 'nfiles'
+                    }, {
+                        name: 'size',
+                        mapping: 'size'
+                    }]),
+                    
+                    sortInfo: {
+                        field: 'size',
+                        direction: 'DESC'
+                    },
+                    baseParams: {
+                        category: 'user',
+                        path: selected
+                    }
+                });
+                
+                // Loader to get the tree nodes async
+                var loader = new Ext.tree.TreeLoader({
+                    dataUrl: '/tree',
+                    uiProviders: {
+                        'col': Ext.tree.ColumnNodeUI
+                    },
+                    baseParams: {
+                        path: '/',
+                        filter: filter
+                    }
+                });
+                
+                loader.on('beforeload', function(loader, node){
+                    loader.baseParams = {
+                        path: node.attributes.path || loader.baseParams.path,
+                        filter: loader.baseParams.filter
+                    };
+                });
+                
+                // Load the sparkline and tooltips once the childNodes are received
+                loader.on('load', function(loader, node){
+
+                    Ext.each(node.childNodes, function(childNode, index){
+
+						// Get the number of datapoints to calculate length of sparkline
+						datapoints = $('.sparkline_' + childNode.attributes.objectID).html().split(',').length;
+
+                        $('.sparkline_' + childNode.attributes.objectID).sparkline('html', {
+							height: 15, 
+							width: datapoints * 4.5,
+							lineColor: '#88a3bc', 
+							fillColor: '#f2f6f6', 
+							minSpotColor: '#f80', 
+							maxSpotColor: '#f00', 
+							spotColor: false, 
+							spotSize: 2,
+							chartRangeMin: 0
+						});
+
+						new Ext.ToolTip({
+							target: childNode.attributes.id + '-size',
+							showDelay: 0,
+							trackMouse: true,
+							html: convert(childNode.attributes.size)
+						});
+                    });
+                });
+                
+                var types = new Ext.grid.GridPanel({
+                    title: 'Types',
+                    iconCls: 'type',
+                    store: typeStore,
+                    listeners: {
+                        Activate: handleCategoryActivate
+                    },
+                    loadMask: true,
+                    columns: [{
+                        id: 'name',
+                        header: 'Name',
+                        width: 220,
+                        sortable: true,
+                        dataIndex: 'name'
+                    }, {
+                        header: 'Number of Files',
+                        width: 220,
+                        sortable: true,
+                        dataIndex: 'nfiles'
+                    }, {
+                        header: 'Size',
+                        width: 220,
+                        sortable: true,
+                        dataIndex: 'size',
+						renderer: function(value) {
+							return convert(value);
+						}
+                    }],
+                    stripeRows: true,
+                    autoExpandColumn: 'name'
+                });
+                
+                // On double click filter tree by this type
+                types.on('rowdblclick', function(grid, index, e){
+                
+                    var name = types.store.getAt(index).get('name');
+                    filterField.setValue('type:' + name);
+
+					// Clear the location field
+					locationField.setValue(selected);
+                    
+                    // Submit the filter
+                    filterField.onTrigger3Click();
+                });
+                
+                var users = new Ext.grid.GridPanel({
+                    title: 'Users',
+                    iconCls: 'user',
+                    store: userStore,
+                    listeners: {
+                        Activate: handleCategoryActivate
+                    },
+                    loadMask: true,
+                    columns: [{
+                        id: 'name',
+                        header: 'Name',
+                        width: 220,
+                        sortable: true,
+                        dataIndex: 'name'
+                    }, {
+                        header: 'Number of Files',
+                        width: 220,
+                        sortable: true,
+                        dataIndex: 'nfiles'
+                    }, {
+                        header: 'Size',
+                        width: 220,
+                        sortable: true,
+                        dataIndex: 'size',
+						renderer: function(value) {
+							return convert(value);
+						}
+                    }],
+                    stripeRows: true,
+                    autoExpandColumn: 'name'
+                });
+                
+                // On double click filter tree by this user
+                users.on('rowdblclick', function(grid, index, e){
+                
+                    var name = users.store.getAt(index).get('name');
+                    filterField.setValue('user:' + name);
+                    
+					// Clear the location field
+					locationField.setValue(selected);
+
+                    // Submit the filter
+                    filterField.onTrigger3Click();
+                });
+                
+                var categories = new Ext.TabPanel({
+                    border: false,
+                    activeTab: category,
+                    tabPosition: 'top',
+                    items: [users, types]
+                });
+                
+                // Handle the switching of the category tabs
+                function handleCategoryActivate(tab){
+                    category = (categories.items.indexOf(categories.getActiveTab()) == 0) ? 'user' : 'type';
+                    
+                    if (category == 'user') {
+                        userStore.load({
+                            params: {
+                                category: 'user',
+                                path: selected
+                            }
+                        });
+                    } else if (category == 'type') {
+						typeStore.load({
+							params: {
+								category: 'type',
+								path: selected
+							}
+						});
+					}
+                }
+                
+                // Handle the switching of the chart tabs
+                function handleChartActivate(tab){
+                    chart = (charts.items.indexOf(charts.getActiveTab()) == 0) ? 'graph' : 'pie';
+                    
+                    if (chart == 'graph') {
+                        generateGraph(charts.getWidth(), charts.getHeight(), startdate.getValue(), enddate.getValue());
+                    } else if (chart == 'pie') {
+						generatePie(charts.getWidth(), charts.getHeight());
+					}
+                }
+                
+                function generateGraph(width, height, start, end){
+                
+					var path   = selected;
+					var width  = width - width / 6;
+					var height = height - height / 2;
+					var start  = new Date(start).format('d/m/Y');
+					var end    = new Date(end).format('d/m/Y');
+
+					Ext.getCmp('graph').getEl().dom.src = 'http://' + sitename + '/graph?path=' + path + '&amp;width=' + width + '&amp;height=' + height + '&amp;start=' + start + '&amp;end=' + end;
+                }
+                
+                // Bake the Pie
+                function generatePie(width, height){
+
+                    var radius = height / 3;
+                    var topOffset = parseInt(height) / 2 - radius - 15;
+                    var leftOffset = parseInt(width) / 2 - radius;
+
+                    $("#pie").width(width);
+                    $("#pie").height(height);
+
+                    Ext.Ajax.request({
+                        url: '/pie',
+                        params: { path: selected },
+                        success: function(response) {
+                            var json  = Ext.decode(response.responseText);
+                            var data  = [];
+
+                            Ext.each(json, function(element) {
+                                data.push({
+                                    'label': element.label,
+                                    'data': element.data
+                                });
+                            });
+
+                            $.plot($("#pie"), data, {
+                                pie: {
+                                    show: true,
+                                    pieStrokeLineWidth: 1,
+                                    pieStrokeColor: '#FFF',
+                                    pieChartRadius: radius,
+                                    centerOffsetTop: topOffset,
+                                    centerOffsetLeft: leftOffset,
+                                    showLabel: true,
+                                    labelOffsetFactor: 5 / 6,
+                                    labelBackgroundOpacity: 0.65,
+                                    labelFormatter: function(series){
+
+                                        return '<span title="' + series.label + ' (' + Math.round(series.percent) + '%)">' + series.label + '<br/>' + Math.round(series.percent) + '% (' + convert(series.data) + ')</span>';
+                                    }
+                                },
+                                legend: {
+                                    show: true,
+                                    position: "nw",
+                                    backgroundOpacity: 0
+                                }
+                            });
+
+                        }
+                    });
+                }
+                
+                tree = new Ext.tree.ColumnTree({
+                    title: 'Sherman',
+                    header: false,
+                    border: false,
+                    autoScroll: true,
+                    rootVisible: false,
+                    stripe: true,
+                    
+                    columns: [{
+                        header: 'Name',
+                        width: 350,
+                        dataIndex: 'name',
+                    }, {
+                        header: 'Number of Files',
+                        width: 100,
+                        dataIndex: 'nfiles',
+                    }, {
+                        header: 'Size',
+                        width: 150,
+                        dataIndex: 'size',
+                    }, {
+						header: 'Last Accessed',
+						width: 150,
+						dataIndex: 'hrlacc',
+					}, {
+                        header: 'Last Modified',
+                        width: 150,
+                        dataIndex: 'hrlmod',
+                    }, {
+                        header: '5 Day Change',
+                        width: 100,
+                        dataIndex: 'trend',
+                    }],
+                    
+                    loader: loader,
+                    
+                    root: new Ext.tree.AsyncTreeNode({
+                        text: 'Name',
+						id: 'root'
+                    })
+                });
+                
+                locationField = new Ext.ux.form.LocationField({
+                    id: 'location',
+                    loader: loader,
+                    tree: tree,
+                    value: path,
+                    layout: 'form',
+                    params: {},
+                    width: 350
+                });
+                
+                filterField = new Ext.ux.form.FilterField({
+                    id: 'filter',
+                    loader: loader,
+                    tree: tree,
+                    value: filter,
+                    params: {},
+                    width: 200
+                });
+                
+                var startdate = new Ext.form.DateField({
+                    id: 'startdate',
+                    name: 'startdate',
+                    format: 'd/m/Y',
+                    value: new Date().add("d", -21),
+                    width: 150,
+                });
+                
+                var enddate = new Ext.form.DateField({
+                    id: 'enddate',
+                    name: 'enddate',
+                    format: 'd/m/Y',
+                    value: new Date(),
+                    width: 150,
+                });
+                
+                var graphPanel = new Ext.Panel({
+                    header: false,
+                    border: false,
+                    tbar: [{
+                        xtype: 'tbfill'
+                    }, '<span style="color: white; font-weight: bold">Start Date:</span>', startdate, '&nbsp;&nbsp;', '<span style="color: white; font-weight: bold">End Date:</span>', enddate, '&nbsp;&nbsp;', new Ext.Button({
+                        text: '<span style="font-weight: bold;">Set</span>',
+                        width: 50,
+                        handler: function(){
+                            generateGraph(charts.getWidth(), charts.getHeight(), startdate.getValue(), enddate.getValue());
+                        }
+                    })],
+                    items: {
+						xtype: 'box',
+                        id: 'graph',
+						autoEl: {
+							style: 'display: block; margin-left: auto; margin-right: auto; margin-top: 10px',
+							tag: 'img',
+							src: ''
+						}
+                    }
+                });
+                
+                var graph = {
+                    title: 'History',
+                    iconCls: 'graph',
+                    listeners: {
+                        Activate: handleChartActivate
+                    },
+                    layout: 'fit',
+                    items: graphPanel
+                };
+                
+                var pie = {
+                    id: 'pie',
+                    title: 'Subtree Percentage',
+                    iconCls: 'pie',
+                    listeners: {
+                        Activate: handleChartActivate
+                    },
+                    html: ''
+                };
+                
+                var charts = new Ext.TabPanel({
+                    border: false,
+                    activeTab: chart,
+                    tabPosition: 'top',
+                    items: [graph, pie]
+                });
+                
+				var shareButton = new Ext.Toolbar.SplitButton({
+					text: '<b>Share</b>',
+					iconCls: 'email-link',
+					menu: {
+						items: [{
+							id: 'link',
+							text: 'Copy Link',
+							iconCls: 'link',
+							handler: share
+						}, {
+							id: 'email',
+							text: 'Email',
+							iconCls: 'email',
+							handler: share,
+							disabled: true
+						}]
+					}
+				});
+
+				function share(item) {
+					
+					var path     = Ext.fly('location').getValue();
+					var filter   = Ext.fly('filter').getValue();
+					var category = categories.items.indexOf(categories.getActiveTab());
+					var chart    = charts.items.indexOf(charts.getActiveTab());
+					var link     = "http://" + sitename + "/?path=" + path.replace(/ /g, "%20") + "&amp;filter=" + filter + "&amp;category=" + category + "&amp;chart=" + chart;
+
+					if (item.id == 'link') {
+						Ext.MessageBox.alert("Copy Sherman Link", "Copy this link:<br/><br/><a href=" + link + ">" + link + "</a>");
+					} else {
+						window.open("mailto:?subject=A message from se Sherman&amp;body=" + link);
+					}
+				}
+
+                var panel = new Ext.Panel({
+                    region: 'center',
+                    margins: '2 0 5 5',
+                    frame: false,
+                    layout: 'fit',
+                    tbar: [
+						'<span style="color: white; font-weight: bold">Location:</span>', 
+						locationField, 
+						'&nbsp;&nbsp;&nbsp;&nbsp;', 
+						'<span style="color: white; font-weight: bold">Filter:</span>', 
+						filterField,
+						'&nbsp;&nbsp;&nbsp;&nbsp;',
+						shareButton,
+						'&nbsp;&nbsp;&nbsp;&nbsp;',
+						'<span style="color: white"><small>Last update: ${lastupdate}</small></span>'
+					],
+                    items: [tree]
+                });
+                
+                // When a node is selected load data
+				tree.getSelectionModel().on('selectionchange', function(tree, node) {
+                
+                    selected = node.attributes.path;
+                    
+                    // Update location field with path
+                    locationField.setValue(selected);
+                    
+                    // Take care of the categories tabs
+                    category = (categories.items.indexOf(categories.getActiveTab()) == 0) ? 'user' : 'type';
+                    
+                    if (category == 'user') {
+                        userStore.load({
+                            params: {
+                                category: category,
+                                path: selected
+                            }
+                        });
+                    } else if (category == 'type') {
+                        typeStore.load({
+                            params: {
+                                category: category,
+                                path: selected
+                            }
+                        });
+                    }
+
+                    // Take care of the charts tabs
+                    chart = (charts.items.indexOf(charts.getActiveTab()) == 0) ? 'graph' : 'pie';
+                    
+                    if (chart == 'graph') {
+						generateGraph(charts.getWidth(), charts.getHeight(), startdate.getValue(), enddate.getValue());
+                    } else if (chart == 'pie') {
+						generatePie(charts.getWidth(), charts.getHeight());
+					}
+                });
+               
+				// Select the first node when the tree is initially loaded 
+                tree.on("expandnode", function(node){
+						
+					var path = Ext.fly('location').getValue();
+
+					// Only do this when root node is expanded
+					if (node.isRoot) {
+				
+						// Expand path if specified
+						tree.pathSeparator = '|';
+						tree.expandPath(constructPath(path));
+					}
+
+					if (node.attributes.path == path) {
+						node.fireEvent("click", node);
+					}
+                })
+                
+                var viewport = new Ext.Viewport({
+                    layout: 'border',
+                    renderTo: Ext.getBody(),
+                    items: [new Ext.BoxComponent({
+                        region: 'north',
+                        height: 5,
+                        autoEl: {
+                            tag: 'div',
+                            html: '<p></p>'
+                        }
+                    }), panel, {
+                        region: 'east',
+                        layout: 'border',
+                        split: true,
+                        border: false,
+                        margins: '2 5 5 0',
+                        width: 800,
+                        items: [{
+                            region: 'north',
+                            height: 400,
+                            split: true,
+                            layout: 'fit',
+                            items: categories
+                        }, {
+                            region: 'center',
+                            layout: 'fit',
+                            items: charts,
+                            listeners: {
+                                'resize': function(){
+                                
+                                    // Check if the Pie tab is selected
+                                    if (charts.items.indexOf(charts.getActiveTab()) == 1) {
+                                        $("#pie").html('');
+                                        generatePie(this.getWidth(), this.getHeight());
+                                    } else if (Ext.get('graph')) {
+										$("#graph").html('');
+										generateGraph(this.getWidth(), this.getHeight(), startdate.getValue(), enddate.getValue());
+                                    }
+                                }
+                            }
+                        }]
+                    }]
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <span id="path" path="${path}" /><span id="filter" filter="${filter}" />
+        <span id="category" category="${category}" /><span id="chart" chart="${chart}" />
+    </body>
+</html>

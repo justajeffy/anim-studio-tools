@@ -1,0 +1,29 @@
+<% leftmargin = 0 -%>
+<% @navigation["levels"].each do |level| -%>
+<div id="level">
+  <table id="navigation" cellspacing="0" cellpadding="0" style="margin-left: <%= leftmargin %>px">
+    <tr>
+    <% 
+			level.each do |tab| 
+				
+				# Sort out the user tab
+				if tab.name.match(/user_/)
+					tabname = tab.name.gsub(/user_/, "")
+
+					next if tabname != @username || tabname == ""
+				else
+					tabname = tab.name
+				end
+
+				# Set fontsize depending on tab name length
+				fontsize = tabname.length > 14 ? '10' : '11'
+		-%>
+      <td id="tab_<%= tab.id %>"><a id="tab_<%= tab.id %>" style="font-size: <%= fontsize %>px" href="<%= tab.id %>?width=<%= params[:width] %>&height=<%= params[:height]%>&duration=<%= params[:duration]%>&end=<%= params[:end]%>" <% if @navigation["active"].include?(tab) -%>class="active"<% end -%>><%= tabname %></a></td>
+    <% 
+			end 
+		-%>
+    </tr>
+  </table>
+</div>
+<% leftmargin += 10 -%>
+<% end -%>

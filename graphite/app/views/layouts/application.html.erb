@@ -1,0 +1,207 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type"  content="text/html;charset=UTF-8" />
+  <link rel="shortcut icon" href="http://graphite.drd.mgt/favicon.ico">
+  <title>Graphite</title>
+  <%= javascript_include_tag 'prototype' %>
+  <%= javascript_include_tag 'effects' %>
+  <%= javascript_include_tag 'window' %>
+  <%= javascript_include_tag 'proto.menu.0.6' %>
+  <%= javascript_include_tag 'tree' %>
+  <%= javascript_include_tag 'dragdrop' %>
+  <%= javascript_include_tag 'cookie' %>
+  <%= calendar_date_select_includes 'red' %>
+
+  <%= stylesheet_link_tag 'style' %>
+  <%= stylesheet_link_tag 'tree' %>
+  <%= stylesheet_link_tag 'proto.menu.0.6' %>
+  <%= stylesheet_link_tag 'themes/window/window' %>
+  <%= stylesheet_link_tag 'themes/window/vista' %>
+</head>
+<body style="background: #EEEEEE;">
+  <script type="text/javascript">
+    
+    var graphIds = [];
+    var resizableEls = [];
+
+    <%
+      # Check ACL in show controller - will move to conf file
+      if @access
+    -%>
+
+    function init() {
+      initMenus();
+      sortEnable();
+    }
+
+    function initMenus() {
+      var tab = [{
+        name: 'Add Tab Here',
+        className: 'addTabHere',
+        callback: function(event){
+
+          // Get id for click tab to get the current level
+          var id = event.element().id.split('_').last();
+
+          if (!$('addTab'))
+            new UI.Window({id: "addTab", theme: "vista", width: 300, height: 170, minimize: false, maximize: false, resizable: false}).center().setHeader("Add Tab").setAjaxContent("/show/newTab/" + id + "?level=same", {asynchronous: true, evalScripts: true}).show().activate();
+        }
+      },{
+        name: 'Add Tab Below',
+        className: 'addTabBelow',
+        callback: function(event){
+
+          // Get id for click tab to get the current level
+          var id = event.element().id.split('_').last();
+
+          if (!$('addTab'))
+            new UI.Window({id: "addTab", theme: "vista", width: 300, height: 170, minimize: false, maximize: false, resizable: false}).center().setHeader("Add Tab").setAjaxContent("/show/newTab/" + id + "?level=below", {asynchronous: true, evalScripts: true}).show().activate();
+        }
+			},{
+				separator: true                 
+			}, {
+				name: 'Rename Tab',
+				className: 'tabEdit',
+				callback: function(event){
+					
+					// Get id for click tab to get the current level    
+          var id = event.element().id.split('_').last();
+					
+					if (!$('renameTab'))
+						new UI.Window({id: "renameTab", theme: "vista", width: 300, height: 170, minimize: false, maximize: false, resizable: false}).center().setHeader("Rename Tab").setAjaxContent("/show/renameTab/" + id, {asynchronous: true, evalScripts: true}).show().activate();
+				},
+			}, {
+				name: 'Delete Tab',
+				className: 'deleteTab',
+				callback: function(event){
+					
+					// Get tab details
+          var id = event.element().id.split('_').last();
+					
+					if (!$('deleteTab'))
+						new UI.Window({id: "deleteTab", theme: "vista", width: 330, height: 160, minimize: false, maximize: false, resizable: false}).center().setHeader("Delete Tab").setAjaxContent("/show/deleteTab/" + id, {asynchronous: true, evalScripts: true}).show().activate();
+				}
+			}, {
+				separator: true 
+			}, {
+        name: 'Add Graph',
+        className: 'addGraph',
+        callback: function(event){
+                                           
+          // Get tab details
+          var id = event.element().id.split('_').last();
+
+          if (!$('new'))
+            new UI.Window({id: "new", theme: "vista", width: 1000, height: 790, minimize: false, maximize: false, resizable: false}).center().setHeader("New Graph").setAjaxContent("/show/newGraph/" + id, {asynchronous: true, evalScripts: true}).show().activate();
+        }    
+      }, {
+        name: 'Paste Graph',
+        className: 'pasteGraph', 
+        callback: function(event) {
+
+          // Check if cookie exists and get graph id
+          graphId = Cookie.get('copy');
+          
+          // Get tab details
+		      tabId = event.element().id.split('_').last();
+
+          if (graphId) {
+            location.replace('/show/copyGraph/' + graphId + '?tabId=' + tabId);
+          } else {
+            alert("Sorry, nothing to paste.");
+          }
+        }
+      }];
+
+      var graph = [{
+        name: 'Edit Graph',
+        className: 'edit',
+        callback: function(event) {
+
+          // Get graph details
+          var id = event.element().id.split('_')[1];
+          var title = event.element().title;
+
+          if (!$(id))
+            new UI.Window({id: id, theme: "vista", width: 1000, height: 790, minimize: false, maximize: false, resizable: false}).center().setHeader(title).setAjaxContent("/show/editGraph/" + id, {asynchronous: true, evalScripts: true}).show().activate();
+        }
+      }, {
+        name: 'Copy Graph',
+        className: 'copyGraph',     
+        callback: function(event){
+                
+          // Get graph details
+          var id    = event.element().id.split('_')[1];
+                
+          // Set the cookie
+          Cookie.set('copy', id, 1);
+        }
+      }, {
+        name: 'Delete Graph',
+        className: 'deleteGraph',
+				callback: function(event){
+					
+          // Get graph details
+          var id = event.element().id.split('_')[1];
+					
+					if (!$('deleteGraph'))
+						new UI.Window({id: "deleteGraph", theme: "vista", width: 350, height: 170, minimize: false, maximize: false, resizable: false}).center().setHeader("Delete Graph").setAjaxContent("/show/deleteGraph/" + id, {asynchronous: true, evalScripts: true}).show().activate();
+				}
+      }];
+      
+      new Proto.Menu({selector: 'div([id*="graph_"])', className: 'menu desktop', menuItems: graph});
+      new Proto.Menu({selector: 'td([id*="tab_"])', className: 'menu desktop', menuItems: tab});
+    }
+
+    function sortEnable() {
+        
+        Sortable.create('graphs', {
+            scroll: window,
+            onUpdate: function(element) {
+                new Ajax.Request('/show/sortGraphs', {
+                   method: 'post',
+                   parameters: { data: Sortable.serialize("graphs") } 
+                });
+            }
+        });
+        
+        graphIds.each(function(id) {
+            $(id).setStyle('cursor: move');
+        });
+    }
+    
+    function toggle_sign(element, id) {
+
+      // Get the new sign
+      var sign = (element.title == 'negative') ? 'positive' : 'negative';
+                            
+      // Change the value in hidden field
+      $('dsUsed_sign_' + id).value = id + "_" + sign;
+
+      // Swap image to reflect change
+      element.src   = "/images/gui/toggle_" + sign + ".png";
+      element.title = sign;
+    }
+
+    function validate() {
+      
+      // Make sure Vertical Label is not empty
+      if ( $('vlabel').value == '' ) {
+        $('vlabel').style.border = "1px solid red";
+        $('vlabelmessage').innerHTML = 'Please enter a label.';
+        return false;
+      }
+
+      return true;
+    }
+
+    <% end -%>
+
+    Event.observe(window, "load", init);
+  </script>
+
+  <p style="color: green"><%= flash[:notice] %></p>
+  <%= yield %>
+</body>
+</html>

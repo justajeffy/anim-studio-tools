@@ -1,0 +1,19 @@
+<form method="post" action="/show/deleteGraph/<%= @id %>">
+    <div id="deleteTab" style="padding: 5px 5px 5px 5px;">
+        <fieldset>
+            <legend>Confirmation</legend>
+            <table border="0" cellspacing="5" cellpadding="5">
+                <tr>
+                    <td colspan="2" style="font-size: 12px;">
+                        <b>Are you sure you want to delete this graph?</b><br/><br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right"><input type="submit" id="delete" name="delete" value="Yes" /></td>
+                </tr>    
+        </fieldset>
+    </div>
+</form>
+<script type="text/javascript">
+  $('delete').focus();
+</script>

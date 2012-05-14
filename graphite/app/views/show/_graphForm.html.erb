@@ -1,0 +1,153 @@
+<div id="editGraph" style="padding: 5px 5px 5px 5px;">
+    <fieldset>
+        <legend>Graph Properties</legend>
+        <table width="100%" border="0">
+            <tr>
+                <td width="50%">
+                    <fieldset>
+                        <table>
+                            <tr>
+                                <td align="right">Title</td>
+                                <td width="10">&nbsp;</td>
+                                <td><input id="title" name="title" type="text" size="30" value="<%= @graph.title if @graph %>" /></td>
+                            </tr>
+                            <tr>
+                                <td align="right">Width</td>
+                                <td width="10">&nbsp;</td>
+                                <td><input name="width" type="text" size="30" value="<%= @graph.width if @graph %>" /></td>
+                            </tr>
+                            <tr>
+                                <td align="right">Height</td>
+                                <td width="10">&nbsp;</td>
+                                <td><input name="height" type="text" size="30" value="<%= @graph.height if @graph %>" /></td>
+                            </tr>
+                            <tr>
+                                <td align="right">Vertical Label</td>
+                                <td width="10">&nbsp;</td>
+                                <td>
+                                    <input id="vlabel" name="vlabel" type="text" size="30" value="<%= @graph.vlabel if @graph %>" />
+                                    <span id="vlabelmessage" style="color: red" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right">Period</td>
+                                <td width="10">&nbsp;</td>
+                                <td><input name="period" type="text" size="30" value="<% if @graph -%><%= @graph.period/60/60 %>hours<% end -%>" /></td>
+                            </tr>
+                            <tr>
+                                <td align="right">Upper Limit</td>
+                                <td width="10">&nbsp;</td>
+                                <td><input name="upperlimit" type="text" size="30" value="<%= @graph.upperlimit if @graph %>" /></td>
+                            </tr>                          
+                            <tr>
+                                <td align="right">Lower Limit</td>
+                                <td width="10">&nbsp;</td>
+                                <td><input name="lowerlimit" type="text" size="30" value="<%= @graph.lowerlimit if @graph %>" /></td>
+                            </tr>                                                  
+                        </table>
+                    </fieldset>
+                </td>
+                <td valign="top">
+                    <fieldset>
+                        <table>
+                            <tr>
+                                <td align="right"><input name="stacked" type="checkbox" <% if @graph and @graph.stacked -%>checked<% end -%>/></td>
+                                <td width="10">&nbsp;</td>
+                                <td>Stacked</td>
+                            </tr>
+                            <tr>
+                                <td align="right"><input name="legend" type="checkbox" <% if @graph and @graph.legend -%>checked<% end -%>/></td>
+                                <td width="10">&nbsp;</td>
+                                <td>Show Legend</td>
+                            </tr>
+                            <!-- Not needed for now
+                            <tr>
+                                <td align="right"><input name="graphmax" type="checkbox" <% if @graph and @graph.max -%>checked<% end -%>/></td>
+                                <td width="10">&nbsp;</td>
+                                <td>Graph Max</td>
+                            </tr>
+                            -->
+                        </table> 
+                    </fieldset>                   
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+    <fieldset>
+        <legend>Datasources</legend>
+        <table width="100%" height="400" border="0">
+            <tr> 
+                <td width="50%" valign="top">
+                    <fieldset>
+                        <legend>Available</legend>
+                        <div style="width: 100%; height: 340px; overflow: auto;">
+                            <ul id="dsAvailable" class="tree">
+                                <img src="/images/gui/loader.gif" width="16" height="16" />Loading ...
+                            </ul>
+                        </div>
+                    </fieldset>
+                </td>
+                <td valign="top">
+                    <fieldset>
+                        <legend>Used</legend>
+                        <div id="dsUsed" style="width: 100%; height: 340px; padding-left: 5px; padding-top: 0px; overflow: auto;">
+                            <img src="/images/gui/loader.gif" width="16" height="16" /> Loading ...
+                        </div>
+                    </fieldset>                    
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+    <div style="float: right; padding-top: 3px;"><input type="submit" name="save" value="Save" /></div>
+</div>
+
+<script type="text/javascript">
+    // Load available datasources
+    new Ajax.Updater('dsAvailable', '/show/dsAvailable', {
+        asynchronous: true,
+        evalScripts: true,
+        onComplete: function(request){
+        }
+    });
+    
+    // Load used datasources
+    new Ajax.Updater('dsUsed', '/show/dsUsed/<%= @graph.id if @graph %>?type=<%= @type %>', {
+        asynchronous: true,
+        evalScripts: true,
+        onSuccess: function(request){
+        }
+    });
+    
+    // Make dsUsed a Droppable
+    Droppables.add("dsUsed", { accept: 'datasource', 
+                               onDrop: function(element) { 
+                                           
+                                           var id = 'dsUsed_' + element.innerHTML + '_' + element.id;
+                                           
+                                           // Create the temp element if it doesn't exist
+                                           if (!$(id)) {
+                                               $('dsUsedList').insert(new Element('li', {
+                                                   id: id,
+                                                   className: 'dsUsed'
+                                               }).update(element.innerHTML + " <a href=\"JavaScript: void(0)\" onClick=\"$('" + id + "').remove(); $('" + id + "_value').remove()\" title=\"Remove\" style=\"color: red; font-weight: bold;\">X</a>"), {
+                                                   position: 'bottom'
+                                               });
+                                               
+                                               // Insert the hidden form field for the Ds
+                                               $('dsUsed').insert(new Element('input', {
+						                                       id: id + '_value',
+                                                   name: 'datasources[]',
+                                                   type: 'hidden',
+                                                   value: element.id
+                                               }), {
+                                                   position: 'bottom'
+                                               });               
+                                           }
+                                       }
+                             }
+                  );
+
+    
+    // Set the focus to the name field
+    $('title').focus();
+</script>

@@ -1,0 +1,26 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+root:
+  id: 1
+  name: root
+  parent_id: 0
+filers:
+  id: 2
+  name: Filers
+  parent_id: 1
+network:
+  id: 3
+  name: Network
+  parent_id: 1
+servers:
+  id: 4
+  name: Severs
+  parent_id: 1
+filer01:
+  id: 5
+  name: Filer01
+  parent_id: 2
+filer02:
+  id: 6
+  name: Filer02
+  parent_id: 2

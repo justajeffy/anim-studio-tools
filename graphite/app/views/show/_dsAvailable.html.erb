@@ -1,0 +1,48 @@
+<%
+  counter = 1
+  noOfDs  = @datasources.length
+  @datasources.each do |datasource| 
+
+    # Check if this is the last element in the tree
+    position = (noOfDs == counter) ? 'last' : '' 
+    counter += 1
+
+    if (datasource.datatype == 'folder')
+-%>
+    <li id="<%= datasource.id %>" class="children closed <%= position %>">
+        <span class="a children spanClosed <%= position %>">
+            <span class="b" onClick="treeToggle(this, this.force)" force="open">
+                <span class="c">
+                    <a href="JavaScript: void(0)"><%= datasource.name %></a>
+                </span>
+            </span>
+        </span>
+        <ul id="children_<%= datasource.id %>">
+            <li class="<%= position %>">
+                <span class="a <%= position %>">
+                    <span class="b">
+                        <span class="c">
+                            <img src="/images/gui/loader.gif" width="16" height="16" /> Loading ...
+                        </span>
+                    </span>
+                </span>                
+            </li>
+        </ul>          
+    </li>
+<% else -%>
+    <li class="<%= position %>">
+        <span class="a <%= position %>">
+            <span class="b">
+                <span class="c">
+                    <a href="JavaScript: void(0)" title="Drag to use in graph"><span id="<%= datasource.id %>" class="datasource"><%= datasource.name %></span></a>
+                    <script type="text/javascript">
+                        new Draggable("<%= datasource.id %>", {revert: true, ghosting: false});
+                    </script>
+                </span>
+            </span>
+        </span>
+    </li>
+<% 
+    end
+  end
+-%>
