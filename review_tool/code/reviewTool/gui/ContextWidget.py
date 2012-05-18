@@ -14,7 +14,7 @@ from            reviewTool.gui.ShotgunApWidget  import ShotgunApWidget, Departme
 from            reviewTool                      import ContextSession
 from            reviewTool                      import FullContextSession
 from            reviewTool                      import projectAwareness
-from            reviewTool                      import TANK_VFS_SUCKS
+from            reviewTool                      import TANK_VFS_DISABLE
 
 import          resource    # icon images
 import          drGadgets.lib.qtGuiPreference   as guiPrefSaver
@@ -2031,7 +2031,7 @@ class ContextWidget(guiTemplate, QtGui.QWidget):
             frame_obj       = tank.find( tank_rev_address.replace('Movie(', 'Frames(') )
             source_obj      = movie_obj if  self._play_frame_sequences=="source_movie" else frame_obj
 
-            if TANK_VFS_SUCKS:
+            if TANK_VFS_DISABLE:
                 frame_full_path = frame_obj.system.filesystem_location
                 movie_full_path = movie_obj.system.filesystem_location
             else:
@@ -2821,7 +2821,7 @@ class ContextWidget(guiTemplate, QtGui.QWidget):
 
             tank_rev_obj = tank.find(tank_address)
 
-            if TANK_VFS_SUCKS:
+            if TANK_VFS_DISABLE:
                 full_path = tank_rev_obj.system.filesystem_location
             else:
                 full_path = tank_rev_obj.system.vfs_full_paths[0]

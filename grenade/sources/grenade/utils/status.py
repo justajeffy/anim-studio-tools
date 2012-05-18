@@ -7,9 +7,6 @@
 
 def get_pipeline_step_task_status_summary(status_list):
     """
-    Shotgun sucks.
-    
-    There... I said it.
     
     There is a new branch of the Python API in GitHub which supports a new 
     feature or method for 'summaries'.  This should make it possible to get 

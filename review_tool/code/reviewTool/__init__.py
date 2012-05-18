@@ -1,7 +1,7 @@
 # this determine if tank virtual file path will be used, instead of file system location
 # this tool has been burn once too many by the slowness that is tank vfs
 # so until it's proven it's competence again, this flag will be set to True
-TANK_VFS_SUCKS = True
+TANK_VFS_DISABLE = True
 
 # since migration over to drd-config, the environment variable DRD_JOB is no longer set per tool
 # review tool depends on a project and can not run on it's own.

@@ -25,9 +25,9 @@ def main(argv):
     splash.log("loading Tank...")
     import tank
 
-    from reviewTool import TANK_VFS_SUCKS
+    from reviewTool import TANK_VFS_DISABLE
 
-    if not(TANK_VFS_SUCKS):
+    if not(TANK_VFS_DISABLE):
         splash.log("initialize Tank virtual file system...")
         tank.local.Tm()
 

@@ -18,14 +18,14 @@ from        reviewTool import FullContextSession
 
 import      resource
 from        pprint import pprint
-from        reviewTool import TANK_VFS_SUCKS
+from        reviewTool import TANK_VFS_DISABLE
 
 import      sinfo_utils
 import      rv_tools
 
 TEST = False
 
-from reviewTool import TANK_VFS_SUCKS
+from reviewTool import TANK_VFS_DISABLE
 FrameThumbnailDelegate.FRAME_TEXT_WIDTH = 0
 
 FRAME_TEXT_WIDTH = 45  # roughly the width of diplaying 4 digits in size 10 font.
@@ -221,7 +221,7 @@ class VersionDelegate(QtGui.QItemDelegate):
 #            projectAwareness.determine_aux_data_from_tank_address_fast(new_address)):
 #            return
 
-        if TANK_VFS_SUCKS:
+        if TANK_VFS_DISABLE:
             path = tank.find(new_address).system.filesystem_location
         else:
             path = tank.find(new_address).system.vfs_full_paths[0]
@@ -397,7 +397,7 @@ class VersionDelegate(QtGui.QItemDelegate):
 #
 #        # tank_render_address = revAddress.replace(ori_ver, ver)
 #
-#        if TANK_VFS_SUCKS:
+#        if TANK_VFS_DISABLE:
 #            path = tank.find(tank_render_address).system.filesystem_location
 #        else:
 #            path = tank.find(tank_render_address).system.vfs_full_paths[0]
@@ -1004,7 +1004,7 @@ class MixMasterWidget(MixMasterGui):
                 source_tank_obj = tank.find(tank_address)
 
                 if flg_movie_source:
-                    if TANK_VFS_SUCKS:
+                    if TANK_VFS_DISABLE:
                         full_path = source_tank_obj.system.filesystem_location
                     else:
                         full_path = source_tank_obj.system.vfs_full_paths[0]
@@ -1271,7 +1271,7 @@ class MixMasterWidget(MixMasterGui):
         for rev_name in add_set:
             aux_data = map_update_ver_to_aux[rev_name]
 
-            if TANK_VFS_SUCKS:
+            if TANK_VFS_DISABLE:
                 system_path = aux_data["tank_asset_rev_obj"].system.filesystem_location
             else:
                 system_path = aux_data["tank_asset_rev_obj"].system.vfs_full_paths[0]
