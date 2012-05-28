@@ -98,7 +98,7 @@ Ext.tree.ColumnNodeUI = Ext.extend(Ext.tree.TreeNodeUI, {
                     a.hrefTarget ? ' target="'+a.hrefTarget+'"' : "", ' unselectable="on">',
                     '<span unselectable="on" class="name">',text,"</span></a>",
                 "</div>"];
-         for(var i = 1, len = cols.length; i < len; i++){
+         for(var i = 1, len = cols.length; i < len + 1; i++){
              c = cols[i];
 			 var text = (c.renderer ? c.renderer(a[c.dataIndex], n, a) : a[c.dataIndex]);
 			 

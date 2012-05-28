@@ -542,7 +542,7 @@ Ext.lib.Ajax = function() {
 
      * if, and only if the number of currently active requests is less than the number of
 
-     * concurrent requests.
+     * Roncurrent requests.
 
      */
 

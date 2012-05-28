@@ -174,6 +174,12 @@ class Root(object):
 			drange = end - start
 			end    = now - end
 
+			if end == 0: end = 'now'
+
+		# Decide whether to use LAST or AVERAGE
+		# If the range is more than a month then show AVERAGE, else LAST
+		cf = 'AVERAGE' if drange > 2592000 else 'LAST'
+
 		command = [ "rrdtool", "graph", "-",
 					"-F", "-E",
 					"--start", str(start),
@@ -187,8 +193,8 @@ class Root(object):
 					"--title", path,
 					"--font", "DEFAULT:0:Verdana",
 					"--lower-limit", "0",
-					"DEF:sizeArea=" + rrd + ":size:AVERAGE", "AREA:sizeArea#98a8b9",
-					"DEF:size=" + rrd + ":size:AVERAGE", "LINE2:size#ff1800:size",
+					"DEF:sizeArea=" + rrd + ":size:%s" % cf, "AREA:sizeArea#98a8b988",
+					"DEF:size=" + rrd + ":size:%s" % cf, "LINE2:size#ff1800:size",
 					"GPRINT:size:LAST: cur\\: %6.2lf%s",
 					"GPRINT:size:MIN: min\\: %6.2lf%s",
 					"GPRINT:size:AVERAGE: avg\\: %6.2lf%s",

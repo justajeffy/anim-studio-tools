@@ -99,6 +99,7 @@
         <script type="text/javascript" src="/media/javascripts/ux/ColumnNodeUI.js" />
         <script type="text/javascript" src="/media/javascripts/ux/LocationField.js" />
         <script type="text/javascript" src="/media/javascripts/ux/FilterField.js" />
+        <script type="text/javascript" src="/media/javascripts/ux/excel-grid/EditorPasteCopyGrid.js" />
         <script type="text/javascript" src="/media/javascripts/jquery.js" />
         <script type="text/javascript" src="/media/javascripts/jquery.sparkline.min.js" />
         <script type="text/javascript" src="/media/javascripts/jquery.tinysort.min.js" />
@@ -532,7 +533,7 @@
                 
                 var charts = new Ext.TabPanel({
                     border: false,
-                    activeTab: chart,
+                    activeTab: 0,
                     tabPosition: 'top',
                     items: [graph, pie]
                 });
