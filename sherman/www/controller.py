@@ -228,8 +228,9 @@ class Root(object):
 
 		# Get the percentages here and combine low percentages to save on JS rendertime
 		for child in children:
-			
-			percent = float(child['data']) / totalSize  * 100
+			percent = 0
+			if totalSize > 0:	
+				percent = float(child['data']) / totalSize  * 100
 
 			if int(percent) < 4:
 				other += int(child['data'])
@@ -267,7 +268,7 @@ class Root(object):
 	def openH5(self):
 
 		try:
-			h5 = h5q.get_nowait()
+			h5 = h5q.get(False)
 		except Queue.Empty:
 			try:
 				h5 = openFile("%s/output/sherman.h5" % SHERMAN, "r")
@@ -280,7 +281,7 @@ class Root(object):
 	def closeH5(self, h5):
 
 		try:
-			h5q.put_nowait(h5)
+			h5q.put(h5, False)
 		except Queue.Full:
 			h5.close()
 
