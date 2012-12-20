@@ -94,9 +94,11 @@ def logdata(cmd):
 
 	# Run the command and write the output from all threads to same logfile
 	find = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+	grep = subprocess.Popen(["grep","-v","-e","_[cg]_"], stdin=find.stdout, stdout=subprocess.PIPE)
+	awk = subprocess.Popen(["awk",'''{ORS=""; print $1 "\\t" $2 "\\t" int($3) "\\t" int($4) "\\t"; $1=$2=$3=$4=""; print $0 "\\n"}'''], stdin=grep.stdout, stdout=subprocess.PIPE)
 
-	
-		line = find.stdout.readline()
+	while 1:	
+		line = awk.stdout.readline()
 
 		if not line: break
 
