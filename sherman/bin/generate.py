@@ -8,8 +8,12 @@ import subprocess
 SHERMAN = os.path.split(os.path.split(os.path.realpath(__file__))[0])[0]
 
 # Import pytables
-sys.path.append(SHERMAN + "/lib")
+#sys.path.append(SHERMAN + "/lib")
+import tables
 from tables import *
+import warnings
+warnings.filterwarnings('ignore', category=tables.NaturalNameWarning)
+
 from numpy import array
 
 LSIN  = sys.argv[1]
@@ -85,7 +89,7 @@ def generateTree():
 					if tree[p]['general']['accessed'] < int(lacc):
 						tree[p]['general']['accessed'] = int(lacc)
 				except:
-					tree[p] = { 'general': { 'size': int(size), 'nfiles': 1, 'modified': int(lmod), 'accessed': int(lacc), 'changed': False } }
+					tree[p] = { 'general': { 'size': int(size), 'nfiles': int(1), 'modified': int(lmod), 'accessed': int(lacc), 'changed': False } }
 
 				# Store file type details
 				try:
