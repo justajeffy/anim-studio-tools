@@ -1,4 +1,4 @@
-#!/bin/env python2.5
+#!/bin/env python
 
 import os
 import re
@@ -17,7 +17,7 @@ def gather():
     s = {}
     s["jobType"]         = "Batch"
     s["job"]             = "Generate Sherman DB"
-    s["cmd"]             = "LD_LIBRARY_PATH=/drd/software/packages/hdf5/1.8.5/lin64/ext/lib python2.5 /drd/software/int/sys/sherman/bin/generate.py %s 2> /dev/null" % TIMESTAMP
+    s["cmd"]             = "LD_LIBRARY_PATH=/drd/software/packages/hdf5/1.8.5/lin64/ext/lib python /drd/software/int/sys/sherman/bin/generate.py %s 2> /dev/null" % TIMESTAMP
     s["packetsize"]      = "1"
     s["assignmentSlots"] = "1"
     s["frameList"]       = "1-1"

@@ -59,7 +59,7 @@ Ext.ux.form.SearchField = Ext.extend(Ext.form.TwinTriggerField, {
             return;
         }
 		console.log('You Hit Enter!');
-		this.loader.baseParams = { path: '/drd/jobs' }
+		this.loader.baseParams = { path: '/' }
 		this.loader.load();
     }	
 });

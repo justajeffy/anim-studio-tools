@@ -1,4 +1,4 @@
-#!/bin/env python2.5
+#!/bin/env python
 
 from __future__ import with_statement
 from threading import Thread, activeCount
@@ -17,8 +17,6 @@ OUTPUTDIR   = SHERMAN + '/output/'
 BINDIR      = SHERMAN + '/bin/'
 WEBCONTROL  = SHERMAN + '/www/controller.py'
 TIMESTAMP   = datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
-
-HDF5LIB     = SHERMAN + "/lib/hdf5/v1_8_5/lib"
 
 # Set up the log file for the find data
 logging.basicConfig(filename=FINDDIR + TIMESTAMP, level=logging.INFO, format='%(message)s')
@@ -97,7 +95,7 @@ def logdata(cmd):
 	# Run the command and write the output from all threads to same logfile
 	find = subprocess.Popen(cmd, stdout=subprocess.PIPE)
 
-	while 1:
+	
 		line = find.stdout.readline()
 
 		if not line: break
@@ -117,7 +115,7 @@ def main():
 	while activeCount() > 1: time.sleep(1)
 
 	# Generate the hdf5 file
-	hd5 = subprocess.Popen(["python2.5", BINDIR + "generate.py", TIMESTAMP], env={"LD_LIBRARY_PATH": HDF5LIB}, stdout=subprocess.PIPE).communicate()[0]
+	hd5 = subprocess.Popen(["python", BINDIR + "generate.py", TIMESTAMP], stdout=subprocess.PIPE).communicate()[0]
 
 	# Generate/Update the rrd files - process 8 rrdtool cmds at a time using xargs
 	cat   = subprocess.Popen(["cat", "/tmp/rrdcommands.tmp"], stdout=subprocess.PIPE)
@@ -130,7 +128,7 @@ def main():
 	if os.path.exists(WEBCONTROL): os.utime(WEBCONTROL, None)
 
 	# bzip2 files and keep for later processing - if necessary
-	bzip = subprocess.Popen(["bzip2", FINDDIR + TIMESTAMP], stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()[0]
+	#bzip = subprocess.Popen(["bzip2", FINDDIR + TIMESTAMP], stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()[0]
 
 if __name__ == '__main__':
 	

@@ -1,4 +1,4 @@
-#!/bin/env python2.5
+#!/bin/env python
 import operator, sys, os, pickle, pwd, random
 import cherrypy
 import simplejson as json
@@ -23,7 +23,7 @@ class Root(object):
 
 	@cherrypy.expose
 	@template.output('index.html')
-	def index(self, path='/drd', filter='type:', category=0, chart=0):
+	def index(self, path='/', filter='type:', category=0, chart=0):
 	
 		lastupdate = time.strftime("%a, %d %b %Y %H:%M %p", time.localtime(os.path.getmtime("%s/output/sherman.h5" % SHERMAN)))
 
@@ -96,8 +96,8 @@ class Root(object):
 										  'id': child._v_pathname,
 										  'name': child._v_name,
 										  'path': child._v_pathname,
-										  'size': size,
-										  'nfiles': nfiles,
+										  'size': int(size),
+										  'nfiles': int(nfiles),
 										  'lmod': child._v_attrs.modified,
 										  'lacc': child._v_attrs.accessed,
 										  'hrlmod': hrlmod,
@@ -115,8 +115,8 @@ class Root(object):
 								  'id': child._v_pathname,
 								  'name': child._v_name,
 								  'path': child._v_pathname,
-								  'size': size,
-								  'nfiles': nfiles,
+								  'size': int(size),
+								  'nfiles': int(nfiles),
 								  'lmod': child._v_attrs.modified,
 								  'lacc': child._v_attrs.accessed,
 								  'hrlmod': hrlmod,
@@ -141,17 +141,18 @@ class Root(object):
 
 		# Generate appropriate output
 		data = []
-		for cat in [ x.fetch_all_fields() for x in table.where("(category == '%s') & (path == '%s')" % (category, path)) ]:
-		
-			size = int(cat[4])
+		if len(path.split("/")) > 4:
+			for cat in [ x.fetch_all_fields() for x in table.where("(category == '%s') & (path == '%s')" % (category, path)) ]:
 			
-			if category == 'user':
-				try:
-					data.append({ 'name': pwd.getpwuid(int(cat[2]))[0], 'nfiles': int(cat[3]), 'size': size })
-				except:
+				size = int(cat[4])
+				
+				if category == 'user':
+					try:
+						data.append({ 'name': pwd.getpwuid(int(cat[2]))[0], 'nfiles': int(cat[3]), 'size': size })
+					except:
+						data.append({ 'name': cat[2], 'nfiles': int(cat[3]), 'size': size })
+				elif category == 'type':
 					data.append({ 'name': cat[2], 'nfiles': int(cat[3]), 'size': size })
-			elif category == 'type':
-				data.append({ 'name': cat[2], 'nfiles': int(cat[3]), 'size': size })
 			
 		self.closeH5(h5)
 
@@ -221,7 +222,7 @@ class Root(object):
 		# Get all children nodes
 		for child in h5.listNodes(path, classname='Group'):
 
-			children.append({ 'label': child._v_name, 'data': child._v_attrs.size })
+			children.append({ 'label': child._v_name, 'data': int(child._v_attrs.size) })
 			totalSize += int(child._v_attrs.size)
 
 		self.closeH5(h5)
@@ -293,7 +294,7 @@ def main(filename):
 		'tools.decode.on': True,
 		'tools.trailing_slash.on': True,
 		'tools.staticdir.root': os.path.abspath(os.path.dirname(__file__)),
-		'server.socket_host': 'sherman.drd.int',
+		'server.socket_host': 'localhost',
 		'server.socket_port': 80,
 	})
 
