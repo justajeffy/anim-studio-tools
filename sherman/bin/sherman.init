@@ -1,0 +1,112 @@
+#!/bin/sh
+
+# Comments to support chkconfig on RedHat Linux
+# chkconfig: 35 96 96
+# description: Cherrypy start/stop script
+
+. /etc/init.d/functions
+
+python=/usr/bin/python
+server=controller.py
+serverdir=/root/anim-studio-tools/sherman/
+serverpidfile=$serverdir/sherman.pid
+serverlog=$serverdir/log/sherman.log
+
+[ -x $python ] || exit 0
+
+RETVAL=0
+
+start () {
+     echo "Starting $server: "
+      if test -f $serverdir/www/$server
+      then
+          cd $serverdir/www
+          PID=`LD_LIBRARY_PATH=$serverdir/lib/hdf5/lib $python $server sherman >> $serverlog 2>&1 & echo $!`
+          echo $PID > $serverpidfile
+          RETVAL=$?
+      else
+        RETVAL=1
+      fi
+      start_success_or_fail $RETVAL
+      return $RETVAL
+}
+
+stop() {
+     if test -f $serverpidfile
+     then
+         serverpid=`cat $serverpidfile`
+         kill -15 $serverpid
+         rm -f $serverpidfile
+         RETVAL=$?
+     else
+         RETVAL=1
+     fi
+     stop_success_or_fail $RETVAL
+     return $RETVAL
+}
+
+start_success_or_fail(){
+     if [ $RETVAL -eq 1 ]; then
+         echo -n "Can't start $server"
+        echo_failure
+        echo
+     else
+         echo -n $server "started"
+         echo_success
+         echo
+     fi
+}
+
+stop_success_or_fail(){
+     if [ $RETVAL -eq 1 ]; then
+         echo -n "Killing $server"
+        echo_failure
+        echo
+     else
+         echo -n "Killing $server"
+         echo_success
+         echo
+     fi
+}
+
+status() {
+     local base=${1##*/}
+     if test -f $serverpidfile
+            then
+            pid=`cat $serverpidfile`
+            checkpid $pid
+            RETVAL=$?
+     else
+            RETVAL=1
+     fi
+     if [ $RETVAL -eq 0 ];then
+            echo "$server pid($pid) is running..."
+            return 0
+     else
+            if [ -f /var/run/${base}.pid ] ; then
+                read pid < /var/run/${base}.pid
+                if [ -n "$pid" ]; then
+                        echo $"${base} dead but pid file exists"
+                        return 1
+                fi
+            fi
+            echo $"${base} is stopped"
+            return 2
+     fi
+}
+case "$1" in
+     start)
+        start
+        ;;
+     stop)
+        stop
+        ;;
+     status)
+        status $server
+         RETVAL=$?
+        ;;
+     *)
+        echo $"Usage: $0 {start|stop|status}"
+        exit 1
+esac
+exit $RETVAL
