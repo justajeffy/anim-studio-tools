@@ -15,3 +15,8 @@ easy_install numexpr
 easy_install Cython
 easy_install tables
 
+cd anim-studio-tools
+cd sherman
+mkdir input
+mkdir output
+mkdir rrd
