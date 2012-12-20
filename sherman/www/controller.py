@@ -141,18 +141,17 @@ class Root(object):
 
 		# Generate appropriate output
 		data = []
-		if len(path.split("/")) > 4:
-			for cat in [ x.fetch_all_fields() for x in table.where("(category == '%s') & (path == '%s')" % (category, path)) ]:
+		for cat in [ x.fetch_all_fields() for x in table.where("(category == '%s') & (path == '%s')" % (category, path)) ]:
+		
+			size = int(cat[4])
 			
-				size = int(cat[4])
-				
-				if category == 'user':
-					try:
-						data.append({ 'name': pwd.getpwuid(int(cat[2]))[0], 'nfiles': int(cat[3]), 'size': size })
-					except:
-						data.append({ 'name': cat[2], 'nfiles': int(cat[3]), 'size': size })
-				elif category == 'type':
+			if category == 'user':
+				try:
+					data.append({ 'name': pwd.getpwuid(int(cat[2]))[0], 'nfiles': int(cat[3]), 'size': size })
+				except:
 					data.append({ 'name': cat[2], 'nfiles': int(cat[3]), 'size': size })
+			elif category == 'type':
+				data.append({ 'name': cat[2], 'nfiles': int(cat[3]), 'size': size })
 			
 		self.closeH5(h5)
 
@@ -294,7 +293,7 @@ def main(filename):
 		'tools.decode.on': True,
 		'tools.trailing_slash.on': True,
 		'tools.staticdir.root': os.path.abspath(os.path.dirname(__file__)),
-		'server.socket_host': 'localhost',
+		'server.socket_host': '0.0.0.0',
 		'server.socket_port': 80,
 	})
 
