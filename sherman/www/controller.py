@@ -84,7 +84,7 @@ class Root(object):
 			leaf = ( child._v_nchildren < 1 ) and True or False
 
 			# Check for any filter action
-			if len(filter) > 5:						
+			if len(filter) > 5:
 			
 				for data in metadata:
 					if child._v_pathname in data:
@@ -98,8 +98,8 @@ class Root(object):
 										  'path': child._v_pathname,
 										  'size': int(size),
 										  'nfiles': int(nfiles),
-										  'lmod': child._v_attrs.modified,
-										  'lacc': child._v_attrs.accessed,
+										  'lmod': int(child._v_attrs.modified),
+										  'lacc': int(child._v_attrs.accessed),
 										  'hrlmod': hrlmod,
 										  'hrlacc': hrlacc,
 										  'trend': '<span class="sparkline_%i">%s</span>' % (child._v_objectID, sizetrend[:-1]),
