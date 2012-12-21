@@ -1,4 +1,6 @@
 sherman/rrd
 sherman/output
 sherman/input
+sherman/lib
+sherman/log
 \.pyc$
